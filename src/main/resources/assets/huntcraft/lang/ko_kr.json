@@ -1,0 +1,14 @@
+{
+	"key.category.huntcraft.huntcraft": "HuntCraft",
+	"key.huntcraft.sprint": "달리기 (납도)",
+	"key.huntcraft.evade": "회피 구르기",
+	"key.huntcraft.attack": "세로베기 / 발도 공격",
+	"key.huntcraft.thrust": "찌르기",
+	"key.huntcraft.spirit": "기인베기",
+	"key.huntcraft.sheathe": "납도 / 발도",
+	"key.huntcraft.lock_on": "락온 토글",
+	"key.huntcraft.use_item": "아이템 사용",
+	"key.huntcraft.debug_shapes": "[디버그] 판정 도형 표시",
+	"key.huntcraft.debug_info": "[디버그] 정보 오버레이",
+	"key.huntcraft.reload_config": "[디버그] 설정 다시 읽기"
+}

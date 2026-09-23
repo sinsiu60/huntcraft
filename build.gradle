@@ -1,0 +1,56 @@
+plugins {
+	id 'net.fabricmc.fabric-loom' version "${loom_version}"
+}
+
+repositories {
+	// GeckoLib: Modrinth Maven (공식 cloudsmith 저장소에 26.2 좌표가 없어 Modrinth 사용)
+	exclusiveContent {
+		forRepository {
+			maven { name = 'Modrinth'; url = 'https://api.modrinth.com/maven' }
+		}
+		filter { includeGroup 'maven.modrinth' }
+	}
+	// PlayerAnimationLib
+	maven { name = 'Redlance'; url = 'https://repo.redlance.org/public' }
+}
+
+loom {
+	// 클라이언트 전용 코드(src/client)와 공용/서버 코드(src/main)를 컴파일 단계에서 분리
+	splitEnvironmentSourceSets()
+
+	mods {
+		"huntcraft" {
+			sourceSet sourceSets.main
+			sourceSet sourceSets.client
+		}
+	}
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+	implementation "maven.modrinth:geckolib:${project.geckolib_modrinth_id}"
+	implementation "com.zigythebird.playeranim:PlayerAnimationLibFabric:${project.player_anim_version}"
+}
+
+processResources {
+	def props = [version: project.version, geckolib_version: project.geckolib_version]
+	inputs.properties props
+	filesMatching("fabric.mod.json") {
+		expand props
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.encoding = 'UTF-8'
+	// MC 26.2 는 Java 25 가 필수 (Java 21 로는 게임 자체가 실행되지 않음)
+	it.options.release = 25
+}
+
+java {
+	withSourcesJar()
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
+}

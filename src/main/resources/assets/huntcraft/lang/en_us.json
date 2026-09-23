@@ -1,0 +1,14 @@
+{
+	"key.category.huntcraft.huntcraft": "HuntCraft",
+	"key.huntcraft.sprint": "Sprint (sheathed)",
+	"key.huntcraft.evade": "Evade Roll",
+	"key.huntcraft.attack": "Overhead Slash / Draw Attack",
+	"key.huntcraft.thrust": "Thrust",
+	"key.huntcraft.spirit": "Spirit Blade",
+	"key.huntcraft.sheathe": "Sheathe / Draw",
+	"key.huntcraft.lock_on": "Toggle Lock-On",
+	"key.huntcraft.use_item": "Use Item",
+	"key.huntcraft.debug_shapes": "[Debug] Show Hit Shapes",
+	"key.huntcraft.debug_info": "[Debug] Info Overlay",
+	"key.huntcraft.reload_config": "[Debug] Reload Config"
+}
