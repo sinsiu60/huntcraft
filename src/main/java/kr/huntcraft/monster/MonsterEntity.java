@@ -66,8 +66,15 @@ public class MonsterEntity extends Mob implements ColliderOwner, GeoEntity {
 	private static final EntityDataAccessor<Float> PRESSURE = SynchedEntityData.defineId(MonsterEntity.class, EntityDataSerializers.FLOAT);
 	private long pushCooldownUntil;
 	private long lastPushTick = Long.MIN_VALUE;
+	/** 재배치: 마지막으로 쓴 틱 · 공통 쿨다운 · 직전에 고른 연계 분기 (같은 연계 연속 금지) */
+	private long lastRepositionTick = Long.MIN_VALUE;
+	private long repositionCooldownUntil;
+	private String lastCombo;
 	/** 죽은 뒤 사체가 남는 시간 (틱) */
 	private static final int CARCASS_TICKS = 60 * 60;
+	/** 재배치 경로 검사: 몸 상자를 이만큼 띄워서 봄 (바닐라 걸음 높이 — 이보다 낮은 턱 · 잔해는 넘어감) · 전장 벽 (radius) 에서 띄울 거리 */
+	private static final double STEP_CLEARANCE = 0.6;
+	private static final double ARENA_MARGIN = 2.0;
 
 	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
 	private final ColliderInstance colliders = new ColliderInstance(this);
@@ -208,6 +215,10 @@ public class MonsterEntity extends Mob implements ColliderOwner, GeoEntity {
 		aware = false;
 		recentAttacks.clear();
 		cooldownUntil.clear();
+		lastPushTick = Long.MIN_VALUE;
+		lastRepositionTick = Long.MIN_VALUE;
+		repositionCooldownUntil = 0L;
+		lastCombo = null;
 		teleportTo(at.x, at.y, at.z);
 		setYRot(yaw);
 		setYHeadRot(yaw);
@@ -310,6 +321,23 @@ public class MonsterEntity extends Mob implements ColliderOwner, GeoEntity {
 	/** 마지막으로 밀어내기 패턴을 쓴 틱 (없으면 Long.MIN_VALUE) — 재배치 조건 */
 	public long lastPushTick() {
 		return lastPushTick;
+	}
+
+	/** 마지막으로 재배치 패턴을 쓴 틱 (없으면 Long.MIN_VALUE) */
+	public long lastRepositionTick() {
+		return lastRepositionTick;
+	}
+
+	/** 시험 · 디버그: 재배치 행동 id 를 지금 자리 · 목표로 경로 검사 → 실제로 할 행동 (alts 포함 — 전부 막히면 · 목표가 없으면 null) */
+	public String repositionPreview(String id) {
+		MonsterDef d = def();
+		MonsterDef.Action a = d == null ? null : d.actions.get(id);
+		Entity tgt = targetEntity();
+		if (a == null || !a.flow().repositions() || tgt == null) {
+			return null;
+		}
+		MonsterDef.Action r = resolveReposition(d, a, tgt, level().getGameTime());
+		return r == null ? null : r.id();
 	}
 
 	public float stance() {
@@ -575,6 +603,12 @@ public class MonsterEntity extends Mob implements ColliderOwner, GeoEntity {
 			pushCooldownUntil = level().getGameTime() + Math.round(d.pressure.cooldown() * 60.0);
 			lastPushTick = level().getGameTime();
 		}
+		// 재배치: 거리를 벌렸으니 압박 초기화 + 공통 쿨다운 (계속 도망만 다니지 않게)
+		if (a.flow().repositions()) {
+			this.entityData.set(PRESSURE, 0.0F);
+			repositionCooldownUntil = level().getGameTime() + Math.round(d.pressure.reposition().cooldown() * 60.0);
+			lastRepositionTick = level().getGameTime();
+		}
 		grabbedThis = false;
 		if (lastWasAttack) {
 			recentAttacks.addLast(id);
@@ -589,15 +623,19 @@ public class MonsterEntity extends Mob implements ColliderOwner, GeoEntity {
 			releaseVictim(null);
 		}
 		// 목표 거리에 맞춘 이동 배율 (뛰어올라 내려찍기)
-		rootScale = 1.0;
+		rootScale = rootScaleFor(a, targetEntity());
+	}
+
+	/** root 앞 이동량을 목표까지 거리에 맞춘 배율 (rootToTarget — 없으면 1) */
+	private double rootScaleFor(MonsterDef.Action a, Entity tgt) {
 		double[] fit = a.flow().rootToTarget();
-		Entity tgt = targetEntity();
 		if (fit != null && tgt != null && a.root().length > 0) {
 			double total = a.rootOffset(a.length())[0] * scaleOf();
 			if (total > 1.0E-3) {
-				rootScale = Mth.clamp((horizontalDistance(tgt) - fit[2]) / total, fit[0], fit[1]);
+				return Mth.clamp((horizontalDistance(tgt) - fit[2]) / total, fit[0], fit[1]);
 			}
 		}
+		return 1.0;
 	}
 
 	private double scaleOf() {
@@ -751,7 +789,7 @@ public class MonsterEntity extends Mob implements ColliderOwner, GeoEntity {
 		return hit.getType() == HitResult.Type.MISS;
 	}
 
-	/** 행동이 끝났을 때 다음: 헛잡음 → missFollow · 연결 공격 확률 → followup · 아니면 보통 고르기 */
+	/** 행동이 끝났을 때 다음: 헛잡음 → missFollow · 연결 공격 확률 → followup · 연계 분기 → combo · 아니면 보통 고르기 */
 	private String nextAfter(ServerLevel level, MonsterDef d, MonsterDef.Action done, Entity tgt) {
 		ActionFx.Flow flow = done.flow();
 		if (flow.grabs() && !grabbedThis && flow.missFollow() != null && d.actions.containsKey(flow.missFollow())) {
@@ -764,8 +802,44 @@ public class MonsterEntity extends Mob implements ColliderOwner, GeoEntity {
 					return f.action();
 				}
 			}
+			String combo = pickCombo(d, flow.combo(), tgt);
+			if (combo != null) {
+				return combo;
+			}
 		}
 		return chooseNext(level, d, tgt);
+	}
+
+	/** 연계 분기 고르기: 목표 거리가 맞는 분기 가운데 가중치로 — 직전 연계와 같은 분기는 (다른 게 있으면) 뺌 */
+	private String pickCombo(MonsterDef d, List<ActionFx.Combo> combo, Entity tgt) {
+		if (combo.isEmpty()) {
+			return null;
+		}
+		double dist = horizontalDistance(tgt);
+		List<ActionFx.Combo> opts = new ArrayList<>();
+		for (ActionFx.Combo c : combo) {
+			if (c.weight() > 0.0 && d.actions.containsKey(c.action()) && (c.range() == null || (dist >= c.range()[0] && dist <= c.range()[1]))) {
+				opts.add(c);
+			}
+		}
+		if (opts.size() > 1) {
+			opts.removeIf(c -> c.action().equals(lastCombo));
+		}
+		if (opts.isEmpty()) {
+			return null;
+		}
+		double total = opts.stream().mapToDouble(ActionFx.Combo::weight).sum();
+		double r = getRandom().nextDouble() * total;
+		ActionFx.Combo pick = opts.getLast();
+		for (ActionFx.Combo c : opts) {
+			r -= c.weight();
+			if (r <= 0.0) {
+				pick = c;
+				break;
+			}
+		}
+		lastCombo = pick.action();
+		return pick.action();
 	}
 
 	/** 쥔 헌터를 손 자리에 붙이고, release 프레임에 던짐 */
@@ -881,13 +955,17 @@ public class MonsterEntity extends Mob implements ColliderOwner, GeoEntity {
 		double dist = horizontalDistance(tgt);
 		double angle = relativeAngle(tgt);
 		List<MonsterDef.Action> candidates = new ArrayList<>();
-		double total = 0.0;
+		List<Double> weights = new ArrayList<>();
 		long now = level.getGameTime();
+		boolean repoOk = repositionAllowed(d, now);
 		for (MonsterDef.Action c : d.actions.values()) {
 			if (c.weight() <= 0.0 || (c.rageOnly() && !enraged()) || cooldownUntil.getOrDefault(c.id(), 0L) > now) {
 				continue;
 			}
 			if (c.flow().push() && pushCooldownUntil > now) {
+				continue;
+			}
+			if (c.flow().repositions() && !repoOk) {
 				continue;
 			}
 			// 같은 공격을 3번 연속으로 쓰지 않음 (직전 두 번이 이 공격이면 빼기)
@@ -900,23 +978,33 @@ public class MonsterEntity extends Mob implements ColliderOwner, GeoEntity {
 			if (c.angle() != null && !inAngle(angle, c.angle())) {
 				continue;
 			}
-			candidates.add(c);
-			total += weightOf(d, c);
+			MonsterDef.Action pick = c;
+			if (c.flow().repositions()) {
+				// 경로가 막혔으면 다른 방향 (alts) → 그것도 막히면 이 패턴은 빼고 다른 패턴으로
+				pick = resolveReposition(d, c, tgt, now);
+				if (pick == null) {
+					continue;
+				}
+			}
+			candidates.add(pick);
+			weights.add(weightOf(d, c));
 		}
-		// 압박 최대: 밀어내기만 (고를 수 있는 게 있으면)
-		if (d.pressure.forceAtMax() && pressure() >= d.pressure.max() && candidates.stream().anyMatch(c -> c.flow().push())) {
-			candidates.removeIf(c -> !c.flow().push());
-			total = 0.0;
-			for (MonsterDef.Action c : candidates) {
-				total += weightOf(d, c);
+		// 압박 최대: 근접 방어 (밀어내기 · 재배치) 만 (고를 수 있는 게 있으면)
+		if (d.pressure.forceAtMax() && pressure() >= d.pressure.max() && candidates.stream().anyMatch(MonsterEntity::closeDefense)) {
+			for (int i = candidates.size() - 1; i >= 0; i--) {
+				if (!closeDefense(candidates.get(i))) {
+					candidates.remove(i);
+					weights.remove(i);
+				}
 			}
 		}
 		if (!candidates.isEmpty()) {
+			double total = weights.stream().mapToDouble(Double::doubleValue).sum();
 			double r = getRandom().nextDouble() * total;
-			for (MonsterDef.Action c : candidates) {
-				r -= weightOf(d, c);
+			for (int i = 0; i < candidates.size(); i++) {
+				r -= weights.get(i);
 				if (r <= 0.0) {
-					return c.id();
+					return candidates.get(i).id();
 				}
 			}
 			return candidates.getLast().id();
@@ -932,14 +1020,133 @@ public class MonsterEntity extends Mob implements ColliderOwner, GeoEntity {
 		return d.pause != null ? d.pause : d.idleAction;
 	}
 
-	/** 고르기 가중치 — 근접 압박이 임계치 이상이면 밀어내기 패턴 × weightBoost */
+	/** 고르기 가중치 — 근접 압박이 임계치 이상이면 밀어내기 패턴 × weightBoost · 재배치는 (고를 수 있으면 늘) × reposition.weightBoost */
 	private double weightOf(MonsterDef d, MonsterDef.Action c) {
+		if (c.flow().repositions()) {
+			return c.weight() * d.pressure.reposition().weightBoost();
+		}
 		return c.weight() * (c.flow().push() && pressure() >= d.pressure.threshold() ? d.pressure.weightBoost() : 1.0);
+	}
+
+	/** 근접 방어 패턴 (밀어내기 · 재배치) */
+	private static boolean closeDefense(MonsterDef.Action a) {
+		return a.flow().push() || a.flow().repositions();
+	}
+
+	/**
+	 * 재배치를 고를 수 있는지: 압박 중간 이상 + 최근 afterPush 초 안에 밀어내기를 씀 + 마지막 재배치 뒤 밀어내기가 있었음 (번갈아) + 공통 쿨다운
+	 */
+	private boolean repositionAllowed(MonsterDef d, long now) {
+		MonsterDef.RepositionRule rr = d.pressure.reposition();
+		return pressure() >= rr.min() && lastPushTick != Long.MIN_VALUE && now - lastPushTick <= Math.round(rr.afterPush() * 60.0)
+				&& lastPushTick > lastRepositionTick && now >= repositionCooldownUntil;
+	}
+
+	/**
+	 * 재배치 행동 c 를 실제로 할 수 있는 것으로: c 와 alts (쿨다운이 아닌 것) 를 — far 면 끝 자리가 목표에서 먼 것부터 — 차례로
+	 * 경로 검사해서 처음 통과한 것. 전부 막히면 null
+	 */
+	private MonsterDef.Action resolveReposition(MonsterDef d, MonsterDef.Action c, Entity tgt, long now) {
+		List<MonsterDef.Action> opts = new ArrayList<>();
+		opts.add(c);
+		for (String alt : c.flow().reposition().alts()) {
+			MonsterDef.Action a = d.actions.get(alt);
+			if (a != null && !opts.contains(a) && cooldownUntil.getOrDefault(alt, 0L) <= now) {
+				opts.add(a);
+			}
+		}
+		Map<MonsterDef.Action, List<Vec3>> paths = new HashMap<>();
+		for (MonsterDef.Action a : opts) {
+			paths.put(a, rootPath(a, tgt));
+		}
+		if (c.flow().reposition().far() && opts.size() > 1) {
+			Vec3 t = tgt.position();
+			opts.sort(java.util.Comparator.comparingDouble((MonsterDef.Action a) -> {
+				Vec3 end = position().add(paths.get(a).getLast());
+				return -Math.hypot(end.x - t.x, end.z - t.z);
+			}));
+		}
+		for (MonsterDef.Action a : opts) {
+			if (pathClear(paths.get(a))) {
+				return a;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 행동의 root 이동을 미리 풀어 본 경로 — 지금 자리 기준 이동량 (블록), 3프레임마다 + 끝. 방향은 track 구간에 돌 만큼 목표 쪽으로 돈 뒤로 봄
+	 * (재배치는 예비 동작 동안 돌고 나서 움직임), 앞 이동량은 rootToTarget 배율까지 (게임과 같은 계산)
+	 */
+	private List<Vec3> rootPath(MonsterDef.Action a, Entity tgt) {
+		MonsterDef d = def();
+		float face = facing;
+		if (a.track() != null && tgt != null) {
+			double rate = a.trackRate() * (d != null && zoneDistance(tgt) <= d.zones.close() ? d.zones.closeTurnRate() : 1.0);
+			float maxTurn = (float) (rate * (a.track()[1] - a.track()[0]) / 60.0);
+			face += Mth.clamp(Mth.wrapDegrees(yawTo(tgt) - (float) a.aimRight() - facing), -maxTurn, maxTurn);
+		}
+		double rs = rootScaleFor(a, tgt);
+		double scale = scaleOf();
+		double rad = Math.toRadians(face);
+		List<Vec3> out = new ArrayList<>();
+		for (int f = 0; ; f += 3) {
+			int ff = Math.min(f, a.length());
+			double[] r = a.rootOffset(ff);
+			double forward = r[0] * rs;
+			double dx = -Math.sin(rad) * forward - Math.cos(rad) * r[1];
+			double dz = Math.cos(rad) * forward - Math.sin(rad) * r[1];
+			out.add(new Vec3(dx * scale, r[2] * scale, dz * scale));
+			if (ff >= a.length()) {
+				return out;
+			}
+		}
+	}
+
+	/**
+	 * 경로 검사: 지나는 자리마다 몸 상자가 블록에 걸리지 않음 (걸음 높이만큼 띄워서 — 낮은 턱은 넘음) · 끝 자리 발 밑 3칸 안에 땅이 있음 ·
+	 * 전장 안에서 싸우는 중이면 끝 자리가 전장 벽 (radius) 안
+	 */
+	private boolean pathClear(List<Vec3> path) {
+		net.minecraft.world.phys.AABB box = getBoundingBox();
+		for (Vec3 o : path) {
+			if (!level().noCollision(this, box.move(o.x, o.y + STEP_CLEARANCE, o.z).deflate(0.05))) {
+				return false;
+			}
+		}
+		Vec3 end = path.getLast();
+		net.minecraft.world.phys.AABB feet = box.move(end.x, end.y, end.z);
+		net.minecraft.world.phys.AABB below = new net.minecraft.world.phys.AABB(feet.minX + 0.3, feet.minY - 3.0, feet.minZ + 0.3,
+				feet.maxX - 0.3, feet.minY - 0.01, feet.maxZ - 0.3);
+		if (level().noCollision(this, below)) {
+			return false; // 낭떠러지 — 떨어질 땅이 없음
+		}
+		if (level() instanceof ServerLevel sl) {
+			kr.huntcraft.arena.ArenaBuilder.Layout l = kr.huntcraft.arena.ArenaStore.load(sl.getServer());
+			if (l != null) {
+				double cx = l.center().getX() + 0.5;
+				double cz = l.center().getZ() + 0.5;
+				boolean inside = Math.hypot(getX() - cx, getZ() - cz) <= l.radius();
+				if (inside && Math.hypot(getX() + end.x - cx, getZ() + end.z - cz) > l.radius() - ARENA_MARGIN) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	private void move(MonsterDef d, MonsterDef.Action a, Entity tgt, double frame) {
 		double prev = Math.max(0.0, prevFrame);
 		double step = Math.max(0.0, frame - prev);
+		// 공중에서 다시 조준: 남은 앞 이동량을 목표의 지금 자리까지로 (높이 도약 → 플레이어 자리로 낙하)
+		int refit = a.flow().refit();
+		double[] fit = a.flow().rootToTarget();
+		if (refit >= 0 && fit != null && tgt != null && prevFrame < refit && frame >= refit) {
+			double remain = (a.rootOffset(a.length())[0] - a.rootOffset(frame)[0]) * scaleOf();
+			if (remain > 1.0E-3) {
+				rootScale = Mth.clamp((horizontalDistance(tgt) - fit[2]) / remain, fit[0], fit[1]);
+			}
+		}
 		// 추적 (예비 동작 동안 목표 쪽으로)
 		if (tgt != null && a.tracking(frame)) {
 			float want = yawTo(tgt) - (float) a.aimRight();

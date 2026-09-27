@@ -3647,168 +3647,6 @@
 				}
 			]
 		},
-		"body_crush": {
-			"animation": "body_crush",
-			"length": 230,
-			"range": [
-				0,
-				4.0
-			],
-			"weight": 0.4,
-			"cooldown": 10.0,
-			"push": true,
-			"track": [
-				0,
-				40
-			],
-			"trackRate": 120,
-			"aimRight": 90,
-			"interruptible": false,
-			"hits": [
-				{
-					"frames": [
-						58,
-						68
-					],
-					"hitboxes": [
-						"crush_body"
-					],
-					"damage": 50,
-					"reaction": "launch",
-					"unblockable": true,
-					"poise": 70
-				}
-			],
-			"events": [
-				{
-					"frame": 2,
-					"effect": "golem_warn_push",
-					"bone": "body",
-					"at": [
-						0,
-						20,
-						0
-					]
-				},
-				{
-					"frame": 20,
-					"effect": "golem_warn",
-					"bone": "head",
-					"at": [
-						0,
-						38,
-						-6
-					]
-				},
-				{
-					"frame": 34,
-					"effect": "golem_creak",
-					"bone": "right_arm2",
-					"at": [
-						-11,
-						10,
-						0
-					]
-				},
-				{
-					"frame": 54,
-					"effect": "golem_swing_heavy",
-					"bone": "body",
-					"at": [
-						0,
-						20,
-						0
-					]
-				},
-				{
-					"frame": 64,
-					"effect": "golem_impact_heavy",
-					"bone": "body",
-					"at": [
-						0,
-						20,
-						0
-					],
-					"shake": {
-						"radius": 28,
-						"strength": 0.45,
-						"duration": 0.6
-					}
-				},
-				{
-					"frame": 71,
-					"effect": "golem_tail",
-					"bone": "body",
-					"at": [
-						0,
-						20,
-						0
-					]
-				},
-				{
-					"frame": 96,
-					"effect": "golem_creak",
-					"bone": "head",
-					"at": [
-						0,
-						38,
-						-4
-					]
-				},
-				{
-					"frame": 128,
-					"effect": "golem_creak",
-					"bone": "left_arm2",
-					"at": [
-						11,
-						10,
-						0
-					]
-				},
-				{
-					"frame": 160,
-					"effect": "golem_step",
-					"bone": "body",
-					"at": [
-						0,
-						2,
-						0
-					],
-					"shake": {
-						"radius": 16,
-						"strength": 0.12,
-						"duration": 0.3
-					}
-				},
-				{
-					"frame": 190,
-					"effect": "golem_creak",
-					"bone": "head",
-					"at": [
-						0,
-						38,
-						-4
-					]
-				}
-			],
-			"emitters": [
-				{
-					"from": 64,
-					"to": 110,
-					"every": 3,
-					"bone": "body",
-					"at": [
-						0,
-						26,
-						0
-					],
-					"particle": "minecraft:electric_spark",
-					"count": 3,
-					"spread": 0.6,
-					"speed": 0.2
-				}
-			]
-		},
 		"steam_vent": {
 			"animation": "steam_vent",
 			"length": 140,
@@ -3950,6 +3788,1584 @@
 					"speed": 0.02
 				}
 			]
+		},
+		"backstep": {
+			"animation": "backstep",
+			"length": 84,
+			"range": [
+				0,
+				5.0
+			],
+			"weight": 1.2,
+			"cooldown": 8.0,
+			"reposition": {
+				"alts": [
+					"side_step_left",
+					"side_step_right"
+				],
+				"far": true
+			},
+			"track": [
+				0,
+				14
+			],
+			"trackRate": 140,
+			"interruptible": false,
+			"root": [
+				[
+					0,
+					0,
+					0,
+					0
+				],
+				[
+					16,
+					0,
+					0,
+					0
+				],
+				[
+					18,
+					-0.125,
+					0.0,
+					0.221
+				],
+				[
+					20,
+					-0.27,
+					0.0,
+					0.415
+				],
+				[
+					22,
+					-0.431,
+					0.0,
+					0.581
+				],
+				[
+					24,
+					-0.606,
+					0.0,
+					0.72
+				],
+				[
+					26,
+					-0.793,
+					0.0,
+					0.83
+				],
+				[
+					28,
+					-0.988,
+					0.0,
+					0.913
+				],
+				[
+					30,
+					-1.19,
+					0.0,
+					0.969
+				],
+				[
+					32,
+					-1.396,
+					0.0,
+					0.997
+				],
+				[
+					34,
+					-1.604,
+					0.0,
+					0.997
+				],
+				[
+					36,
+					-1.81,
+					0.0,
+					0.969
+				],
+				[
+					38,
+					-2.012,
+					0.0,
+					0.913
+				],
+				[
+					40,
+					-2.207,
+					0.0,
+					0.83
+				],
+				[
+					42,
+					-2.394,
+					0.0,
+					0.72
+				],
+				[
+					44,
+					-2.569,
+					0.0,
+					0.581
+				],
+				[
+					46,
+					-2.73,
+					0.0,
+					0.415
+				],
+				[
+					48,
+					-2.875,
+					0.0,
+					0.221
+				],
+				[
+					50,
+					-3.0,
+					0.0,
+					0
+				],
+				[
+					84,
+					-3.0,
+					0.0,
+					0
+				]
+			],
+			"hits": [
+				{
+					"frames": [
+						15,
+						21
+					],
+					"hitboxes": [
+						"stamp_right",
+						"stamp_left"
+					],
+					"damage": 12,
+					"reaction": "knockback",
+					"poise": 15,
+					"guardStamina": 15
+				},
+				{
+					"frames": [
+						49,
+						55
+					],
+					"hitboxes": [
+						"stamp_right",
+						"stamp_left"
+					],
+					"damage": 14,
+					"reaction": "knockback",
+					"poise": 15,
+					"guardStamina": 15
+				}
+			],
+			"events": [
+				{
+					"frame": 2,
+					"every": 0,
+					"effect": "golem_creak",
+					"bone": "head",
+					"at": [
+						0,
+						38,
+						-4
+					]
+				},
+				{
+					"frame": 16,
+					"effect": "golem_kick",
+					"shake": {
+						"radius": 20,
+						"strength": 0.15,
+						"duration": 0.3
+					}
+				},
+				{
+					"frame": 50,
+					"effect": "golem_impact",
+					"shake": {
+						"radius": 24,
+						"strength": 0.3,
+						"duration": 0.4
+					}
+				},
+				{
+					"frame": 56,
+					"effect": "golem_tail",
+					"bone": "body",
+					"at": [
+						0,
+						2,
+						0
+					]
+				},
+				{
+					"frame": 70,
+					"every": 0,
+					"effect": "golem_creak",
+					"bone": "right_arm2",
+					"at": [
+						-11,
+						10,
+						0
+					]
+				}
+			],
+			"combo": [
+				{
+					"action": "grab_rush",
+					"weight": 2.0,
+					"range": [
+						0,
+						14
+					]
+				},
+				{
+					"action": "punch",
+					"weight": 1.5,
+					"range": [
+						3,
+						16
+					]
+				},
+				{
+					"action": "throw",
+					"weight": 1.0,
+					"range": [
+						5,
+						30
+					]
+				}
+			]
+		},
+		"side_step_right": {
+			"animation": "side_step_right",
+			"length": 80,
+			"range": [
+				0,
+				4.5
+			],
+			"weight": 0.6,
+			"cooldown": 6.0,
+			"reposition": {
+				"alts": [
+					"side_step_left"
+				],
+				"far": true
+			},
+			"track": [
+				0,
+				8
+			],
+			"trackRate": 140,
+			"interruptible": false,
+			"root": [
+				[
+					0,
+					0,
+					0,
+					0
+				],
+				[
+					10,
+					0,
+					0,
+					0
+				],
+				[
+					12,
+					0.0,
+					0.124,
+					0.121
+				],
+				[
+					14,
+					0.0,
+					0.275,
+					0.216
+				],
+				[
+					16,
+					0.0,
+					0.446,
+					0.286
+				],
+				[
+					18,
+					0.0,
+					0.632,
+					0.33
+				],
+				[
+					20,
+					0.0,
+					0.826,
+					0.349
+				],
+				[
+					22,
+					0.0,
+					1.021,
+					0.343
+				],
+				[
+					24,
+					0.0,
+					1.212,
+					0.311
+				],
+				[
+					26,
+					0.0,
+					1.392,
+					0.254
+				],
+				[
+					28,
+					0.0,
+					1.554,
+					0.171
+				],
+				[
+					30,
+					0.0,
+					1.692,
+					0.063
+				],
+				[
+					31,
+					0.0,
+					1.75,
+					0
+				],
+				[
+					80,
+					0.0,
+					1.75,
+					0
+				]
+			],
+			"hits": [
+				{
+					"frames": [
+						9,
+						14
+					],
+					"hitboxes": [
+						"stamp_right",
+						"stamp_left"
+					],
+					"damage": 10,
+					"reaction": "knockback",
+					"poise": 15,
+					"guardStamina": 15
+				},
+				{
+					"frames": [
+						30,
+						35
+					],
+					"hitboxes": [
+						"stamp_right",
+						"stamp_left"
+					],
+					"damage": 10,
+					"reaction": "knockback",
+					"poise": 15,
+					"guardStamina": 15
+				}
+			],
+			"events": [
+				{
+					"frame": 10,
+					"effect": "golem_kick",
+					"shake": {
+						"radius": 16,
+						"strength": 0.1,
+						"duration": 0.25
+					}
+				},
+				{
+					"frame": 31,
+					"effect": "golem_impact",
+					"shake": {
+						"radius": 20,
+						"strength": 0.2,
+						"duration": 0.3
+					}
+				},
+				{
+					"frame": 45,
+					"every": 0,
+					"effect": "golem_creak",
+					"bone": "head",
+					"at": [
+						0,
+						38,
+						-4
+					]
+				}
+			],
+			"combo": [
+				{
+					"action": "grab_rush",
+					"weight": 1.5
+				},
+				{
+					"action": "charge",
+					"weight": 1.0
+				}
+			]
+		},
+		"side_step_left": {
+			"animation": "side_step_left",
+			"length": 80,
+			"range": [
+				0,
+				4.5
+			],
+			"weight": 0.6,
+			"cooldown": 6.0,
+			"reposition": {
+				"alts": [
+					"side_step_right"
+				],
+				"far": true
+			},
+			"track": [
+				0,
+				8
+			],
+			"trackRate": 140,
+			"interruptible": false,
+			"root": [
+				[
+					0,
+					0,
+					0,
+					0
+				],
+				[
+					10,
+					0,
+					0,
+					0
+				],
+				[
+					12,
+					0.0,
+					-0.124,
+					0.121
+				],
+				[
+					14,
+					0.0,
+					-0.275,
+					0.216
+				],
+				[
+					16,
+					0.0,
+					-0.446,
+					0.286
+				],
+				[
+					18,
+					0.0,
+					-0.632,
+					0.33
+				],
+				[
+					20,
+					0.0,
+					-0.826,
+					0.349
+				],
+				[
+					22,
+					0.0,
+					-1.021,
+					0.343
+				],
+				[
+					24,
+					0.0,
+					-1.212,
+					0.311
+				],
+				[
+					26,
+					0.0,
+					-1.392,
+					0.254
+				],
+				[
+					28,
+					0.0,
+					-1.554,
+					0.171
+				],
+				[
+					30,
+					0.0,
+					-1.692,
+					0.063
+				],
+				[
+					31,
+					0.0,
+					-1.75,
+					0
+				],
+				[
+					80,
+					0.0,
+					-1.75,
+					0
+				]
+			],
+			"hits": [
+				{
+					"frames": [
+						9,
+						14
+					],
+					"hitboxes": [
+						"stamp_right",
+						"stamp_left"
+					],
+					"damage": 10,
+					"reaction": "knockback",
+					"poise": 15,
+					"guardStamina": 15
+				},
+				{
+					"frames": [
+						30,
+						35
+					],
+					"hitboxes": [
+						"stamp_right",
+						"stamp_left"
+					],
+					"damage": 10,
+					"reaction": "knockback",
+					"poise": 15,
+					"guardStamina": 15
+				}
+			],
+			"events": [
+				{
+					"frame": 10,
+					"effect": "golem_kick",
+					"shake": {
+						"radius": 16,
+						"strength": 0.1,
+						"duration": 0.25
+					}
+				},
+				{
+					"frame": 31,
+					"effect": "golem_impact",
+					"shake": {
+						"radius": 20,
+						"strength": 0.2,
+						"duration": 0.3
+					}
+				},
+				{
+					"frame": 45,
+					"every": 0,
+					"effect": "golem_creak",
+					"bone": "head",
+					"at": [
+						0,
+						38,
+						-4
+					]
+				}
+			],
+			"combo": [
+				{
+					"action": "grab_rush",
+					"weight": 1.5
+				},
+				{
+					"action": "charge",
+					"weight": 1.0
+				}
+			]
+		},
+		"pass_charge": {
+			"animation": "charge",
+			"length": 140,
+			"range": [
+				0,
+				4.5
+			],
+			"weight": 1.0,
+			"cooldown": 9.0,
+			"reposition": {},
+			"track": [
+				0,
+				40
+			],
+			"trackRate": 150,
+			"interruptible": false,
+			"root": [
+				[
+					0,
+					0,
+					0
+				],
+				[
+					42,
+					-0.3,
+					0
+				],
+				[
+					47,
+					0,
+					0
+				],
+				[
+					60,
+					1.2,
+					0
+				],
+				[
+					93,
+					7.0,
+					0
+				],
+				[
+					103,
+					7.7,
+					0
+				],
+				[
+					140,
+					7.7,
+					0
+				]
+			],
+			"rootToTarget": [
+				0.35,
+				1.8,
+				-5.0
+			],
+			"emitters": [
+				{
+					"from": 47,
+					"to": 95,
+					"every": 2,
+					"bone": "body",
+					"at": [
+						0,
+						30,
+						7
+					],
+					"particle": "minecraft:large_smoke",
+					"count": 1,
+					"spread": 0.3,
+					"speed": 0.02
+				}
+			],
+			"hits": [
+				{
+					"frames": [
+						48,
+						96
+					],
+					"hitboxes": [
+						"body_charge"
+					],
+					"damage": 18,
+					"reaction": "knockback",
+					"poise": 25,
+					"guardStamina": 25
+				}
+			],
+			"events": [
+				{
+					"frame": 3,
+					"effect": "golem_tell_heavy",
+					"bone": "head",
+					"at": [
+						0,
+						38,
+						-6
+					],
+					"layer": "tell"
+				},
+				{
+					"frame": 42,
+					"effect": "golem_kick",
+					"bone": "body",
+					"at": [
+						0,
+						28,
+						0
+					]
+				},
+				{
+					"frame": 46,
+					"effect": "golem_swing_heavy",
+					"bone": "body",
+					"at": [
+						0,
+						20,
+						0
+					],
+					"layer": "swing"
+				},
+				{
+					"frame": 52,
+					"every": 17,
+					"effect": "golem_step",
+					"shake": {
+						"radius": 16,
+						"strength": 0.08,
+						"duration": 0.2
+					}
+				},
+				{
+					"frame": 110,
+					"every": 0,
+					"effect": "golem_creak",
+					"bone": "head",
+					"at": [
+						0,
+						38,
+						-4
+					]
+				}
+			],
+			"wallStop": "charge_wall",
+			"wallWindow": [
+				50,
+				95
+			],
+			"combo": [
+				{
+					"action": "turn_sweep",
+					"weight": 1.5
+				},
+				{
+					"action": "charge_turn",
+					"weight": 1.0
+				}
+			]
+		},
+		"turn_sweep": {
+			"animation": "sweep_1",
+			"length": 120,
+			"track": [
+				0,
+				40
+			],
+			"trackRate": 320,
+			"interruptible": true,
+			"spin": {
+				"from": 42,
+				"to": 90,
+				"degrees": 360
+			},
+			"hits": [
+				{
+					"frames": [
+						44,
+						90
+					],
+					"hitboxes": [
+						"upper_right",
+						"upper_left",
+						"fore_right",
+						"fore_left"
+					],
+					"damage": 38,
+					"reaction": "knockback",
+					"poise": 30,
+					"guardStamina": 35,
+					"inner": [
+						{
+							"frames": [
+								44,
+								90
+							],
+							"hitboxes": [
+								"inner_waist"
+							],
+							"damageScale": 0.6,
+							"reaction": "knockback"
+						}
+					]
+				}
+			],
+			"events": [
+				{
+					"frame": 2,
+					"effect": "golem_tell_heavy",
+					"bone": "body",
+					"at": [
+						0,
+						20,
+						0
+					],
+					"layer": "tell"
+				},
+				{
+					"frame": 32,
+					"every": 0,
+					"effect": "golem_creak",
+					"bone": "head",
+					"at": [
+						0,
+						38,
+						-4
+					]
+				},
+				{
+					"frame": 42,
+					"effect": "golem_swing_heavy",
+					"bone": "body",
+					"at": [
+						0,
+						28,
+						0
+					]
+				},
+				{
+					"frame": 66,
+					"effect": "golem_swing_heavy",
+					"bone": "body",
+					"at": [
+						0,
+						20,
+						0
+					],
+					"layer": "swing"
+				},
+				{
+					"frame": 90,
+					"every": 0,
+					"effect": "golem_creak",
+					"bone": "right_arm",
+					"at": [
+						-11,
+						30,
+						0
+					]
+				}
+			],
+			"emitters": [
+				{
+					"from": 10,
+					"to": 42,
+					"every": 3,
+					"bone": "body",
+					"at": [
+						0,
+						30,
+						7
+					],
+					"particle": "minecraft:campfire_cosy_smoke",
+					"count": 1,
+					"spread": 0.3,
+					"speed": 0.02
+				}
+			],
+			"followups": [
+				{
+					"action": "sweep_2",
+					"chance": 0.35,
+					"rageChance": 0.7
+				}
+			]
+		},
+		"charge_turn": {
+			"animation": "charge",
+			"length": 140,
+			"track": [
+				0,
+				44
+			],
+			"trackRate": 320,
+			"interruptible": false,
+			"root": [
+				[
+					0,
+					0,
+					0
+				],
+				[
+					42,
+					-0.3,
+					0
+				],
+				[
+					47,
+					0,
+					0
+				],
+				[
+					60,
+					1.2,
+					0
+				],
+				[
+					93,
+					7.0,
+					0
+				],
+				[
+					103,
+					7.7,
+					0
+				],
+				[
+					140,
+					7.7,
+					0
+				]
+			],
+			"hits": [
+				{
+					"frames": [
+						48,
+						96
+					],
+					"hitboxes": [
+						"body_charge"
+					],
+					"damage": 45,
+					"reaction": "launch",
+					"poise": 50,
+					"guardStamina": 55,
+					"inner": [
+						{
+							"frames": [
+								44,
+								96
+							],
+							"hitboxes": [
+								"inner_flank"
+							],
+							"damageScale": 0.6,
+							"reaction": "launch"
+						}
+					]
+				}
+			],
+			"events": [
+				{
+					"frame": 3,
+					"effect": "golem_tell_heavy",
+					"bone": "head",
+					"at": [
+						0,
+						38,
+						-6
+					],
+					"layer": "tell"
+				},
+				{
+					"frame": 42,
+					"effect": "golem_kick",
+					"bone": "body",
+					"at": [
+						0,
+						28,
+						0
+					]
+				},
+				{
+					"frame": 46,
+					"effect": "golem_swing_heavy",
+					"bone": "body",
+					"at": [
+						0,
+						20,
+						0
+					],
+					"layer": "swing"
+				},
+				{
+					"frame": 52,
+					"every": 17,
+					"effect": "golem_step",
+					"shake": {
+						"radius": 16,
+						"strength": 0.08,
+						"duration": 0.2
+					}
+				},
+				{
+					"frame": 110,
+					"every": 0,
+					"effect": "golem_creak",
+					"bone": "head",
+					"at": [
+						0,
+						38,
+						-4
+					]
+				}
+			],
+			"emitters": [
+				{
+					"from": 47,
+					"to": 95,
+					"every": 2,
+					"bone": "body",
+					"at": [
+						0,
+						30,
+						7
+					],
+					"particle": "minecraft:large_smoke",
+					"count": 1,
+					"spread": 0.3,
+					"speed": 0.02
+				}
+			],
+			"wallStop": "charge_wall",
+			"wallWindow": [
+				50,
+				95
+			]
+		},
+		"grab_rush": {
+			"animation": "grab_reach",
+			"length": 84,
+			"track": [
+				0,
+				30
+			],
+			"trackRate": 160,
+			"interruptible": false,
+			"root": [
+				[
+					0,
+					0,
+					0,
+					0
+				],
+				[
+					18,
+					0,
+					0,
+					0
+				],
+				[
+					40,
+					2.6,
+					0,
+					0
+				],
+				[
+					84,
+					2.6,
+					0,
+					0
+				]
+			],
+			"hits": [
+				{
+					"frames": [
+						33,
+						44
+					],
+					"hitboxes": [
+						"fist_right",
+						"fist_left"
+					],
+					"damage": 0,
+					"grab": true,
+					"unblockable": true,
+					"inner": [
+						{
+							"frames": [
+								33,
+								44
+							],
+							"hitboxes": [
+								"inner_neck"
+							],
+							"damageScale": 1.0
+						}
+					]
+				}
+			],
+			"events": [
+				{
+					"frame": 2,
+					"effect": "golem_warn",
+					"bone": "head",
+					"at": [
+						0,
+						38,
+						-6
+					],
+					"layer": "tell"
+				},
+				{
+					"frame": 18,
+					"effect": "golem_step",
+					"shake": {
+						"radius": 16,
+						"strength": 0.1,
+						"duration": 0.25
+					}
+				},
+				{
+					"frame": 24,
+					"every": 0,
+					"effect": "golem_creak",
+					"bone": "head",
+					"at": [
+						0,
+						38,
+						-4
+					]
+				},
+				{
+					"frame": 27,
+					"effect": "golem_swing",
+					"bone": "right_arm2",
+					"at": [
+						-11,
+						-2,
+						0
+					],
+					"layer": "swing"
+				}
+			],
+			"onGrab": "grab_hold",
+			"missFollow": "grab_miss",
+			"rootToTarget": [
+				0.2,
+				1.6,
+				2.0
+			]
+		},
+		"leap_slam": {
+			"animation": "leap_high",
+			"length": 215,
+			"range": [
+				0,
+				5.0
+			],
+			"weight": 0.8,
+			"cooldown": 12.0,
+			"reposition": {},
+			"track": [
+				0,
+				100
+			],
+			"trackRate": 240,
+			"interruptible": false,
+			"root": [
+				[
+					0,
+					0,
+					0,
+					0
+				],
+				[
+					45,
+					0,
+					0,
+					0
+				],
+				[
+					47,
+					0.0,
+					0.0,
+					0.337
+				],
+				[
+					49,
+					0.0,
+					0.0,
+					0.657
+				],
+				[
+					51,
+					0.0,
+					0.0,
+					0.96
+				],
+				[
+					53,
+					0.0,
+					0.0,
+					1.246
+				],
+				[
+					55,
+					0.0,
+					0.0,
+					1.515
+				],
+				[
+					57,
+					0.0,
+					0.0,
+					1.767
+				],
+				[
+					59,
+					0.0,
+					0.0,
+					2.002
+				],
+				[
+					61,
+					0.0,
+					0.0,
+					2.219
+				],
+				[
+					63,
+					0.0,
+					0.0,
+					2.42
+				],
+				[
+					65,
+					0.0,
+					0.0,
+					2.603
+				],
+				[
+					67,
+					0.0,
+					0.0,
+					2.77
+				],
+				[
+					69,
+					0.0,
+					0.0,
+					2.919
+				],
+				[
+					71,
+					0.042,
+					0.0,
+					3.051
+				],
+				[
+					73,
+					0.134,
+					0.0,
+					3.167
+				],
+				[
+					75,
+					0.235,
+					0.0,
+					3.265
+				],
+				[
+					77,
+					0.345,
+					0.0,
+					3.346
+				],
+				[
+					79,
+					0.463,
+					0.0,
+					3.41
+				],
+				[
+					81,
+					0.587,
+					0.0,
+					3.457
+				],
+				[
+					83,
+					0.717,
+					0.0,
+					3.487
+				],
+				[
+					85,
+					0.853,
+					0.0,
+					3.499
+				],
+				[
+					87,
+					0.992,
+					0.0,
+					3.495
+				],
+				[
+					89,
+					1.135,
+					0.0,
+					3.474
+				],
+				[
+					91,
+					1.28,
+					0.0,
+					3.435
+				],
+				[
+					93,
+					1.427,
+					0.0,
+					3.38
+				],
+				[
+					95,
+					1.573,
+					0.0,
+					3.307
+				],
+				[
+					97,
+					1.72,
+					0.0,
+					3.218
+				],
+				[
+					99,
+					1.865,
+					0.0,
+					3.111
+				],
+				[
+					101,
+					2.008,
+					0.0,
+					2.987
+				],
+				[
+					103,
+					2.147,
+					0.0,
+					2.847
+				],
+				[
+					105,
+					2.283,
+					0.0,
+					2.689
+				],
+				[
+					107,
+					2.413,
+					0.0,
+					2.514
+				],
+				[
+					109,
+					2.537,
+					0.0,
+					2.322
+				],
+				[
+					111,
+					2.655,
+					0.0,
+					2.112
+				],
+				[
+					113,
+					2.765,
+					0.0,
+					1.886
+				],
+				[
+					115,
+					2.866,
+					0.0,
+					1.643
+				],
+				[
+					117,
+					2.958,
+					0.0,
+					1.383
+				],
+				[
+					119,
+					3.0,
+					0.0,
+					1.105
+				],
+				[
+					121,
+					3.0,
+					0.0,
+					0.811
+				],
+				[
+					123,
+					3.0,
+					0.0,
+					0.499
+				],
+				[
+					125,
+					3.0,
+					0.0,
+					0.171
+				],
+				[
+					126,
+					3.0,
+					0.0,
+					0
+				],
+				[
+					215,
+					3.0,
+					0.0,
+					0
+				]
+			],
+			"rootToTarget": [
+				0.0,
+				3.2,
+				0.0
+			],
+			"refit": 96,
+			"hits": [
+				{
+					"frames": [
+						44,
+						50
+					],
+					"hitboxes": [
+						"stamp_right",
+						"stamp_left"
+					],
+					"damage": 12,
+					"reaction": "knockback",
+					"poise": 15,
+					"guardStamina": 15
+				},
+				{
+					"frames": [
+						121,
+						131
+					],
+					"hitboxes": [
+						"body_slam",
+						"fist_right",
+						"fist_left"
+					],
+					"damage": 50,
+					"reaction": "launch",
+					"poise": 60,
+					"guardStamina": 60
+				}
+			],
+			"events": [
+				{
+					"frame": 2,
+					"effect": "golem_tell_heavy",
+					"bone": "head",
+					"at": [
+						0,
+						38,
+						-6
+					],
+					"layer": "tell"
+				},
+				{
+					"frame": 44,
+					"effect": "golem_kick",
+					"shake": {
+						"radius": 24,
+						"strength": 0.2,
+						"duration": 0.35
+					}
+				},
+				{
+					"frame": 112,
+					"effect": "golem_swing_heavy",
+					"bone": "body",
+					"at": [
+						0,
+						20,
+						0
+					],
+					"layer": "swing"
+				},
+				{
+					"frame": 126,
+					"effect": "golem_impact_heavy",
+					"shake": {
+						"radius": 36,
+						"strength": 0.6,
+						"duration": 0.8
+					}
+				},
+				{
+					"frame": 126,
+					"shockwave": {
+						"angle": 360,
+						"range": 7,
+						"speed": 14,
+						"width": 2.0,
+						"height": 0.5,
+						"damage": 22,
+						"reaction": "launch",
+						"jumpClear": 0.6
+					}
+				},
+				{
+					"frame": 133,
+					"effect": "golem_tail",
+					"bone": "body",
+					"at": [
+						0,
+						2,
+						-10
+					],
+					"layer": "tail"
+				},
+				{
+					"frame": 160,
+					"every": 0,
+					"effect": "golem_creak",
+					"bone": "head",
+					"at": [
+						0,
+						38,
+						-4
+					]
+				}
+			],
+			"emitters": [
+				{
+					"from": 44,
+					"to": 60,
+					"every": 2,
+					"bone": "body",
+					"at": [
+						0,
+						4,
+						0
+					],
+					"particle": "minecraft:large_smoke",
+					"count": 2,
+					"spread": 0.6,
+					"speed": 0.03
+				}
+			]
 		}
 	},
 	"zones": {
@@ -3974,7 +5390,13 @@
 		"threshold": 60,
 		"weightBoost": 8,
 		"cooldown": 4,
-		"forceAtMax": true
+		"forceAtMax": true,
+		"reposition": {
+			"min": 35,
+			"afterPush": 10.0,
+			"cooldown": 8.0,
+			"weightBoost": 6
+		}
 	},
 	"music": {
 		"intro": "huntcraft:music.prunis_intro",

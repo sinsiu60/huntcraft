@@ -97,10 +97,18 @@ public final class MonsterDef {
 	 * "pressure": 근접 압박 (행동 선택 조건). 목표가 밀착 구역이면 초당 innerRate, 근접이면 closeRate 만큼 오르고 그 밖이면 decay 로 내려감,
 	 *   밀착 · 근접에서 헌터에게 맞으면 hitAdd. threshold 이상이면 밀어내기 (push) 행동 가중치 × weightBoost.
 	 *   밀어내기를 쓰면 0 으로 · cooldown 초 동안 밀어내기 안 함. max = 상한.
-	 *   임계치 이상이면 공격 뒤 숨 고르기 (afterAttack.pause) 를 건너뜀 · forceAtMax = 최대면 밀어내기만 고름
+	 *   임계치 이상이면 공격 뒤 숨 고르기 (afterAttack.pause) 를 건너뜀 · forceAtMax = 최대면 근접 방어 (밀어내기 · 고를 수 있는 재배치) 만 고름
+	 *   "reposition": {@link RepositionRule} — 재배치 패턴을 고르는 조건
 	 */
 	public record Pressure(double max, double innerRate, double closeRate, double decay, double hitAdd, double threshold, double weightBoost,
-						   double cooldown, boolean forceAtMax) {}
+						   double cooldown, boolean forceAtMax, RepositionRule reposition) {}
+
+	/**
+	 * "pressure.reposition": 재배치 (보스가 직접 거리를 벌림 — 근접 방어의 하나) 를 고르는 조건.
+	 *   압박이 min 이상 + 밀어내기를 쓴 지 afterPush 초 안 + 마지막 재배치 뒤에 밀어내기를 한 번 이상 씀 (밀어내기와 번갈아)
+	 *   + 재배치 공통 쿨다운 (cooldown 초 — 계속 도망만 다니지 않게). 조건이 되면 가중치 × weightBoost. 쓰면 압박 0
+	 */
+	public record RepositionRule(double min, double afterPush, double cooldown, double weightBoost) {}
 
 	/** 근접 구역 (보스 기준 — 몸 hurtbox 바닥 윤곽에서 잰 수평 거리, 블록 · 방향 각도). 커버리지 도구 · 근접 압박이 씀 */
 	public final Zones zones;
@@ -324,9 +332,11 @@ public final class MonsterDef {
 		JsonObject mu = o.has("music") ? o.getAsJsonObject("music") : null;
 		music = mu == null ? null : new Music(str(mu, "intro"), str(mu, "phase1"), str(mu, "phase2"), str(mu, "ending"));
 		JsonObject pr = o.has("pressure") ? o.getAsJsonObject("pressure") : new JsonObject();
+		JsonObject rr = pr.has("reposition") ? pr.getAsJsonObject("reposition") : new JsonObject();
 		pressure = new Pressure(num(pr, "max", 100), num(pr, "innerRate", 25), num(pr, "closeRate", 8), num(pr, "decay", 15), num(pr, "hitAdd", 10),
 				num(pr, "threshold", 60), num(pr, "weightBoost", 8), num(pr, "cooldown", 6),
-				!pr.has("forceAtMax") || pr.get("forceAtMax").getAsBoolean());
+				!pr.has("forceAtMax") || pr.get("forceAtMax").getAsBoolean(),
+				new RepositionRule(num(rr, "min", 35), num(rr, "afterPush", 10), num(rr, "cooldown", 9), num(rr, "weightBoost", 6)));
 		zones = new Zones(num(zo, "inner", 1.0), num(zo, "close", 3.0), num(zo, "mid", 8.0), num(zo, "front", 45), num(zo, "back", 135), Set.copyOf(parts),
 				num(zo, "closeTurnRate", 1.0));
 		actions = new HashMap<>();
@@ -341,6 +351,20 @@ public final class MonsterDef {
 				stanceBreak, riposted, dormant, awaken}) {
 			if (role != null && !actions.containsKey(role)) {
 				throw new IllegalArgumentException("roles 가 없는 행동을 가리킴: " + role);
+			}
+		}
+		for (Action a : actions.values()) {
+			for (ActionFx.Combo c : a.flow().combo()) {
+				if (!actions.containsKey(c.action())) {
+					throw new IllegalArgumentException("행동 " + a.id() + ": combo 가 없는 행동을 가리킴: " + c.action());
+				}
+			}
+			if (a.flow().repositions()) {
+				for (String alt : a.flow().reposition().alts()) {
+					if (!actions.containsKey(alt)) {
+						throw new IllegalArgumentException("행동 " + a.id() + ": reposition.alts 가 없는 행동을 가리킴: " + alt);
+					}
+				}
 			}
 		}
 	}

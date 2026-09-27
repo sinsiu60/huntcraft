@@ -54,6 +54,15 @@ public final class ActionFx {
 	/** 연결 공격 하나: 이 행동이 끝나면 chance (분노 때 rageChance) 확률로 바로 이어서 (숨 고르기 없이) */
 	public record Follow(String action, double chance, double rageChance) {}
 
+	/** 연계 분기 하나: 행동이 끝나면 분기들 가운데 weight 비율로 하나를 골라 바로 이어서. range = 이 분기를 고를 수 있는 목표 거리 (null = 늘) */
+	public record Combo(String action, double weight, double[] range) {}
+
+	/**
+	 * 재배치 (보스가 직접 거리를 벌림): 고르기 전에 root 경로의 블록 충돌 · 착지할 땅 · 전장 경계를 미리 검사.
+	 * alts = 막혔을 때 대신 해 볼 행동 (다른 방향), far = 이 행동과 alts 가운데 끝 자리가 목표에서 먼 것부터 (플레이어 반대편 우선)
+	 */
+	public record Reposition(List<String> alts, boolean far) {}
+
 	/**
 	 * 잡은 헌터를 손에 쥐고 있기: bone · at 자리에 붙어 있다가 release 프레임에 대미지 · 반응 (던지기).
 	 * stare {"bone", "at", "until"} (없으면 null) = 쥐고 쳐다보는 얼굴 자리 — 잡힌 헌터의 카메라 연출이 until 프레임까지 이곳을 봄
@@ -81,12 +90,20 @@ public final class ActionFx {
 	 *   "invuln": true   이 행동 동안 맞지 않음 (페이즈 전환 연출)
 	 *   "cinematic": {"bone", "at", "until"}   가까운 헌터의 카메라가 until 프레임까지 이 자리를 봄 (깨어남 · 페이즈 전환 · 처치 연출)
 	 *   "push": true   밀어내기 패턴 — 근접 압박이 임계치를 넘으면 가중치가 크게 오름 (MonsterDef.pressure), 쓰면 압박 0 + 쿨다운
+	 *   "reposition": {"alts": ["side_step_left"], "far": true}   재배치 패턴 ({@link Reposition}) — 고르는 조건은 MonsterDef.pressure.reposition
+	 *   "combo": [{"action": "grab_rush", "weight": 2}, {"action": "throw", "weight": 1, "range": [6, 30]}]
+	 *            끝나면 분기 하나를 가중치로 골라 바로 이어서 (followups 다음에 봄) — 직전에 이 행동에서 고른 분기는 한 번 쉼 (매번 같은 연계 금지)
+	 *   "refit": 96   그 프레임에 rootToTarget 을 목표의 지금 자리로 다시 맞춤 (공중에서 떨어질 자리 조준)
 	 */
 	public record Flow(List<Follow> followups, String onGrab, String missFollow, String wallStop, int[] wallWindow, double[] rootToTarget,
 					   Hold hold, List<Projectile> projectiles, int[] critOpen, String riposted, boolean invuln, Cinematic cinematic,
-					   boolean push) {
+					   boolean push, Reposition reposition, List<Combo> combo, int refit) {
 		public boolean grabs() {
 			return onGrab != null;
+		}
+
+		public boolean repositions() {
+			return reposition != null;
 		}
 	}
 
@@ -140,9 +157,27 @@ public final class ActionFx {
 			JsonObject c = a.getAsJsonObject("cinematic");
 			cin = new Cinematic(c.get("bone").getAsString(), vec(c, "at"), c.has("until") ? c.get("until").getAsInt() : Integer.MAX_VALUE);
 		}
+		Reposition repo = null;
+		if (a.has("reposition")) {
+			JsonObject r = a.getAsJsonObject("reposition");
+			List<String> alts = new ArrayList<>();
+			if (r.has("alts")) {
+				r.getAsJsonArray("alts").forEach(e -> alts.add(e.getAsString()));
+			}
+			repo = new Reposition(List.copyOf(alts), r.has("far") && r.get("far").getAsBoolean());
+		}
+		List<Combo> combo = new ArrayList<>();
+		if (a.has("combo")) {
+			for (JsonElement e : a.getAsJsonArray("combo")) {
+				JsonObject o = e.getAsJsonObject();
+				JsonArray rg = o.has("range") ? o.getAsJsonArray("range") : null;
+				combo.add(new Combo(o.get("action").getAsString(), num(o, "weight", 1.0),
+						rg == null ? null : new double[] {rg.get(0).getAsDouble(), rg.get(1).getAsDouble()}));
+			}
+		}
 		return new Flow(follows, str(a, "onGrab"), str(a, "missFollow"), str(a, "wallStop"), window, toTarget, hold, projs, crit, str(a, "riposted"),
 				a.has("invuln") && a.get("invuln").getAsBoolean(), cin,
-				a.has("push") && a.get("push").getAsBoolean());
+				a.has("push") && a.get("push").getAsBoolean(), repo, List.copyOf(combo), a.has("refit") ? a.get("refit").getAsInt() : -1);
 	}
 
 	private static String str(JsonObject o, String key) {
