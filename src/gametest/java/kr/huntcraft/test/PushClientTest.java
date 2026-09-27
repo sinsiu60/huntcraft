@@ -28,16 +28,16 @@ import net.minecraft.world.phys.Vec3;
  * Step 2 — 근접 압박 · 밀어내기 패턴:
  *   압박: 밀착이면 오르고 멀어지면 내려감
  *   완료 조건: 배 밑 · 뒤 · 옆에 계속 붙어 있으면 10초 안에 밀어내기 패턴이 나옴 (자리마다 여러 번)
- *   회피: 다섯 패턴 전부 구르기로 피함 (짓밟기 충격파는 점프로도)
+ *   회피: 네 패턴 전부 구르기로 피함 (짓밟기 충격파는 점프로도)
  *   외력: 몸 털기에 맞으면 보스 반대쪽으로 밀려남 (감속) · 벽에 막히면 그 자리에서 멈춤
- *   소리: 밀어내기 패턴은 공통 경고음 (golem.warn_push), 깔아뭉개기는 가드 불가 경고 (golem.warn) 도
+ *   소리: 밀어내기 패턴은 공통 경고음 (golem.warn_push)
  */
 public final class PushClientTest implements FabricClientGameTest {
 	private static final int Y = 150;
 	private static final List<String> FAILURES = new ArrayList<>();
 	private static final List<String> HEARD = new ArrayList<>();
 	private static int golemId;
-	private static final String[] PUSH = {"shake_off", "stomp_both", "arm_spin", "body_crush", "steam_vent"};
+	private static final String[] PUSH = {"shake_off", "stomp_both", "arm_spin", "steam_vent"};
 
 	@Override
 	public void runTest(ClientGameTestContext ctx) {
@@ -100,7 +100,7 @@ public final class PushClientTest implements FabricClientGameTest {
 		expect(down < up, "멀어져도 압박이 내려가지 않음");
 	}
 
-	/** 몸 털기에 맞음 → 대미지 낮음 · 보스 반대쪽으로 밀려남 (외력) + 경고음 · 깔아뭉개기 경고음 */
+	/** 몸 털기에 맞음 → 대미지 낮음 · 보스 반대쪽으로 밀려남 (외력) + 경고음 */
 	private static void forceAndSound(ClientGameTestContext ctx, TestSingleplayerContext sp) {
 		reset(ctx, sp, 0.0, 1.8);
 		int from = HEARD.size();
@@ -117,12 +117,6 @@ public final class PushClientTest implements FabricClientGameTest {
 		expect(hp0 - hp(sp) > 0.0 && hp0 - hp(sp) < 20.0, "몸 털기 대미지가 낮지 않음: " + (hp0 - hp(sp)));
 		expect(pushed > 3.0 && away > 2.5, "몸 털기에 밀려나지 않음: 외력 " + pushed + " · 반대쪽 " + away);
 		expect(ids.contains("golem.warn_push") && !ids.contains("golem.warn") && !ids.contains("golem.kick"), "몸 털기 경고음이 다름: " + ids);
-		reset(ctx, sp, 0.0, 1.8);
-		from = HEARD.size();
-		run(ctx, sp, "body_crush", -1, null);
-		ids = new ArrayList<>(HEARD.subList(from, HEARD.size()));
-		log("깔아뭉개기 소리: %s", ids);
-		expect(ids.contains("golem.warn_push") && ids.contains("golem.warn"), "깔아뭉개기에 밀어내기 · 가드 불가 경고음이 없음: " + ids);
 	}
 
 	/** 벽: 헌터 바로 뒤 (보스 반대쪽) 에 벽 → 밀려나다 벽에서 멈춤 (벽을 뚫거나 더 굳지 않음) */
@@ -167,6 +161,8 @@ public final class PushClientTest implements FabricClientGameTest {
 				double x = spots[s][0];
 				double z = spots[s][1];
 				sp.getServer().runOnServer(server -> {
+					// 전투 상태 초기화 — 앞 시도의 밀어내기 기록이 남으면 재배치 (Step 3) 가 먼저 나와 보스가 자리를 떠남
+					golem(server).resetForFight(new Vec3(0.5, Y + 1, 0.5), 0.0F, false);
 					golem(server).setPressure(0.0F);
 					golem(server).setAi(true);
 				});

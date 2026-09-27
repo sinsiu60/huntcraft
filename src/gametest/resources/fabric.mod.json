@@ -5,7 +5,7 @@
 	"name": "HuntCraft Tests",
 	"environment": "*",
 	"entrypoints": {
-		"fabric-client-gametest": ["kr.huntcraft.test.Phase0ClientTest", "kr.huntcraft.test.Phase1ClientTest", "kr.huntcraft.test.Phase2ClientTest", "kr.huntcraft.test.Phase3ClientTest", "kr.huntcraft.test.Phase4ClientTest", "kr.huntcraft.test.Phase6ClientTest", "kr.huntcraft.test.Phase7ClientTest", "kr.huntcraft.test.Phase8ClientTest", "kr.huntcraft.test.GolemClientTest", "kr.huntcraft.test.GolemPatternsClientTest", "kr.huntcraft.test.ArenaClientTest", "kr.huntcraft.test.SoundClientTest", "kr.huntcraft.test.CoverageClientTest", "kr.huntcraft.test.PushClientTest", "kr.huntcraft.test.MusicClientTest", "kr.huntcraft.test.MotionGalleryClientTest", "kr.huntcraft.test.MonsterGalleryClientTest"]
+		"fabric-client-gametest": ["kr.huntcraft.test.Phase0ClientTest", "kr.huntcraft.test.Phase1ClientTest", "kr.huntcraft.test.Phase2ClientTest", "kr.huntcraft.test.Phase3ClientTest", "kr.huntcraft.test.Phase4ClientTest", "kr.huntcraft.test.Phase6ClientTest", "kr.huntcraft.test.Phase7ClientTest", "kr.huntcraft.test.Phase8ClientTest", "kr.huntcraft.test.GolemClientTest", "kr.huntcraft.test.GolemPatternsClientTest", "kr.huntcraft.test.ArenaClientTest", "kr.huntcraft.test.SoundClientTest", "kr.huntcraft.test.CoverageClientTest", "kr.huntcraft.test.PushClientTest", "kr.huntcraft.test.RepositionClientTest", "kr.huntcraft.test.MusicClientTest", "kr.huntcraft.test.MotionGalleryClientTest", "kr.huntcraft.test.MonsterGalleryClientTest"]
 	},
 	"depends": { "huntcraft": "*" }
 }

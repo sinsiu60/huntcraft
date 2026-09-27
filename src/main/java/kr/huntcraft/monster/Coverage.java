@@ -109,6 +109,9 @@ public final class Coverage {
 			for (ActionFx.Follow f : a.flow().followups()) {
 				parents.computeIfAbsent(f.action(), k -> new ArrayList<>()).add(a.id());
 			}
+			for (ActionFx.Combo c : a.flow().combo()) {
+				parents.computeIfAbsent(c.action(), k -> new ArrayList<>()).add(a.id());
+			}
 		}
 		List<Cell> cells = new ArrayList<>();
 		int n = (int) Math.floor(o.radius() / o.spacing());

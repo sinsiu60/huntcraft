@@ -40,7 +40,8 @@
 		{"id": "inner_burst_l", "bone": "left_arm2", "shape": {"type": "capsule", "a": [11, 2.4, 0.05], "b": [11, 2.4, 0.05], "radius": 12}},
 		{"id": "inner_neck", "bone": "body", "shape": {"type": "capsule", "a": [0, 32, -5], "b": [0, 20, -9], "radius": 6}},
 		{"id": "shake_burst", "bone": "body", "shape": {"type": "capsule", "a": [0, 14, 0], "b": [0, 14, 0], "radius": 20}},
-		{"id": "crush_body", "bone": "body", "shape": {"type": "obb", "center": [0, 26, 0], "size": [30, 26, 24]}},
+		{"id": "stamp_right", "bone": "right_leg", "shape": {"type": "capsule", "a": [-4.5, 1, -0.5], "b": [-4.5, 1, -0.5], "radius": 8}},
+		{"id": "stamp_left", "bone": "left_leg", "shape": {"type": "capsule", "a": [4.5, 1, -0.5], "b": [4.5, 1, -0.5], "radius": 8}},
 		{"id": "steam_near", "bone": "head", "shape": {"type": "capsule", "a": [0, 34, -8], "b": [0, 31, -18], "radius": 8}},
 		{"id": "steam_far", "bone": "head", "shape": {"type": "capsule", "a": [0, 31, -18], "b": [0, 27, -34], "radius": 14}}
 	]
