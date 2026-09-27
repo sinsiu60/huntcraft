@@ -1,0 +1,88 @@
+{
+    "targets": {
+        "swap": {}
+    },
+    "passes": [
+        {
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "huntcraft:post/souls_grade",
+            "inputs": [
+                {
+                    "sampler_name": "In",
+                    "target": "minecraft:main"
+                }
+            ],
+            "output": "swap",
+            "uniforms": {
+                "SoulsGrade": [
+                    {
+                        "name": "ShadowTint",
+                        "type": "vec4",
+                        "value": [
+                            0.92,
+                            0.97,
+                            1.03,
+                            0.0
+                        ]
+                    },
+                    {
+                        "name": "HighlightTint",
+                        "type": "vec4",
+                        "value": [
+                            1.04,
+                            1.0,
+                            0.9,
+                            0.0
+                        ]
+                    },
+                    {
+                        "name": "Tone",
+                        "type": "vec4",
+                        "value": [
+                            0.62,
+                            1.08,
+                            0.93,
+                            0.035
+                        ]
+                    },
+                    {
+                        "name": "Frame",
+                        "type": "vec4",
+                        "value": [
+                            0.28,
+                            0.0,
+                            0.0,
+                            0.0
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "minecraft:post/blit",
+            "inputs": [
+                {
+                    "sampler_name": "In",
+                    "target": "swap"
+                }
+            ],
+            "uniforms": {
+                "BlitConfig": [
+                    {
+                        "name": "ColorModulate",
+                        "type": "vec4",
+                        "value": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                ]
+            },
+            "output": "minecraft:main"
+        }
+    ],
+    "_설명": "SoulsGrade: ShadowTint · HighlightTint = 어두운 곳 · 밝은 곳 색 배율 (rgb) / Tone = [채도, 대비, 밝기, 검정 띄우기] / Frame = [가장자리 어둡게]"
+}

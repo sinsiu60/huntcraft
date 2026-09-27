@@ -26,6 +26,35 @@ loom {
 	}
 }
 
+fabricApi {
+	// 자동 시험 (src/gametest): 실제 클라이언트 + 싱글플레이 월드에서 바닐라 속도 · 키 억제 · 조합 입력 확인
+	//   ./gradlew runClientGameTest
+	configureTests {
+		createSourceSet = true
+		modId = "huntcraft-test"
+		enableGameTests = false
+		enableClientGameTests = true
+	}
+}
+
+// 시험 골라 돌리기: -Ponly=Phase3ClientTest,MotionGalleryClientTest   모션 하나만 갤러리: -Pmotion=overhead_slash   판정 도형 끄기: -Pshapes=false
+tasks.matching { it.name == "runClientGameTest" }.configureEach {
+	if (project.hasProperty('only')) {
+		jvmArgs "-Dhuntcraft.only=${project.property('only')}"
+	}
+	['frames', 'views', 'boss'].each { k ->
+		if (project.hasProperty(k)) {
+			jvmArgs "-Dhuntcraft.${k}=${project.property(k)}"
+		}
+	}
+	if (project.hasProperty('shapes')) {
+		jvmArgs "-Dhuntcraft.shapes=${project.property('shapes')}"
+	}
+	if (project.hasProperty('motion')) {
+		jvmArgs "-Dhuntcraft.motion=${project.property('motion')}"
+	}
+}
+
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
@@ -35,11 +64,50 @@ dependencies {
 	implementation "com.zigythebird.playeranim:PlayerAnimationLibFabric:${project.player_anim_version}"
 }
 
+// 판정 데이터 목록 (huntcraft/defs/index.txt) — 보스를 더하면 파일만 넣으면 됨 (코드에 목록을 적지 않음)
+def defsIndexDir = layout.buildDirectory.dir('generated/defsIndex')
+tasks.register('generateDefsIndex') {
+	def src = file('src/main/resources/huntcraft/defs')
+	inputs.dir(src)
+	outputs.dir(defsIndexDir)
+	doLast {
+		def out = defsIndexDir.get().file('huntcraft/defs/index.txt').asFile
+		out.parentFile.mkdirs()
+		def lines = []
+		src.eachFileRecurse(groovy.io.FileType.FILES) { f ->
+			if (f.name.endsWith('.json')) {
+				lines << src.toPath().relativize(f.toPath()).toString().replace(File.separator, '/')
+			}
+		}
+		out.text = lines.sort().join('\n') + '\n'
+	}
+}
+sourceSets.main.resources.srcDir(defsIndexDir)
+processResources.dependsOn('generateDefsIndex')
+// 소스 jar 도 생성된 index 를 담으므로 먼저 만들어야 함
+tasks.matching { it.name == 'sourcesJar' }.configureEach { dependsOn('generateDefsIndex') }
+
 processResources {
+	// 공개 배포판: -PnoMusic 이면 보스 음악 (저작권 — 저장소에도 없음) 을 jar 에서 뺌. 곡은 리소스팩으로 넣으면 재생됨
+	if (project.hasProperty('noMusic')) {
+		exclude 'assets/huntcraft/sounds/music/**'
+	}
 	def props = [version: project.version, geckolib_version: project.geckolib_version]
 	inputs.properties props
 	filesMatching("fabric.mod.json") {
 		expand props
+	}
+	// 몬스터 모델 · 애니메이션 원본은 판정 데이터(defs) 한 벌 — GeckoLib 이 읽는 자리로 복사 (메시 · 텍스처 렌더용)
+	// 보스 모델 · 애니메이션 전부 (플레이어 스켈레톤 · 무기 모션은 GeckoLib 이 안 씀)
+	from('src/main/resources/huntcraft/defs/skeletons') {
+		include '*.geo.json'
+		exclude 'hunter.geo.json', 'training_dummy.geo.json', 'swing_rod.geo.json'
+		into 'assets/huntcraft/geckolib/models/entity'
+	}
+	from('src/main/resources/huntcraft/defs/animations') {
+		include '*.animation.json'
+		exclude 'longsword.animation.json'
+		into 'assets/huntcraft/geckolib/animations/entity'
 	}
 }
 

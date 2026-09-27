@@ -1,0 +1,883 @@
+{
+	"idleDrawnAnimation": "animation.huntcraft.longsword.idle_drawn",
+	"idle": {
+		"sheathed": {
+			"EVADE": "roll",
+			"USE_ITEM": "use_item"
+		},
+		"drawn": {
+			"LIGHT": "light_1",
+			"HEAVY": "heavy_1",
+			"GUARD": "guard",
+			"EVADE": "roll",
+			"USE_ITEM": "use_item",
+			"PARRY": "parry"
+		},
+		"sprint": {
+			"LIGHT": "run_attack"
+		},
+		"air": {
+			"LIGHT": "jump_light",
+			"HEAVY": "jump_heavy"
+		},
+		"locked": {
+			"EVADE": "evade"
+		},
+		"critical": {
+			"LIGHT": "critical",
+			"HEAVY": "critical"
+		}
+	},
+	"motions": {
+		"evade": {
+			"variants": {
+				"forward": "roll_forward",
+				"left": "roll_left",
+				"right": "roll_right",
+				"back": "roll_back"
+			},
+			"name": "락온 회피 (방향별 구르기)",
+			"neutral": "backstep"
+		},
+		"roll_forward": {
+			"animation": "animation.huntcraft.longsword.roll_forward",
+			"length": 37,
+			"turn": 0,
+			"cancel": 27,
+			"evadeCancel": 32,
+			"root": [
+				[0, 0],
+				[3, 0.2],
+				[26, 3.0]
+			],
+			"shake": [
+				{
+					"frame": 22,
+					"strength": 0.06,
+					"duration": 0.18
+				}
+			],
+			"evade": true,
+			"stamina": 25,
+			"idleNext": true,
+			"grip": "right",
+			"name": "구르기",
+			"next": {
+				"LIGHT": "roll_attack"
+			},
+			"comboWindow": 12
+		},
+		"roll_back": {
+			"animation": "animation.huntcraft.longsword.roll_back",
+			"length": 37,
+			"turn": 0,
+			"cancel": 28,
+			"evadeCancel": 32,
+			"root": [
+				[0, 0],
+				[4, -0.2],
+				[28, -2.7]
+			],
+			"shake": [
+				{
+					"frame": 24,
+					"strength": 0.06,
+					"duration": 0.18
+				}
+			],
+			"evade": true,
+			"stamina": 25,
+			"idleNext": true,
+			"grip": "right",
+			"name": "구르기",
+			"next": {
+				"LIGHT": "roll_attack"
+			},
+			"comboWindow": 12
+		},
+		"roll_right": {
+			"animation": "animation.huntcraft.longsword.roll_right",
+			"length": 35,
+			"turn": 0,
+			"cancel": 26,
+			"evadeCancel": 30,
+			"root": [
+				[0, 0, 0],
+				[3, 0, 0.2],
+				[24, 0, 3.0]
+			],
+			"shake": [
+				{
+					"frame": 22,
+					"strength": 0.06,
+					"duration": 0.18
+				}
+			],
+			"evade": true,
+			"stamina": 25,
+			"idleNext": true,
+			"grip": "right",
+			"name": "구르기",
+			"next": {
+				"LIGHT": "roll_attack"
+			},
+			"comboWindow": 12
+		},
+		"roll_left": {
+			"animation": "animation.huntcraft.longsword.roll_left",
+			"length": 35,
+			"turn": 0,
+			"cancel": 26,
+			"evadeCancel": 30,
+			"root": [
+				[0, 0, 0],
+				[3, 0, -0.2],
+				[24, 0, -3.0]
+			],
+			"shake": [
+				{
+					"frame": 22,
+					"strength": 0.06,
+					"duration": 0.18
+				}
+			],
+			"evade": true,
+			"stamina": 25,
+			"idleNext": true,
+			"grip": "right",
+			"name": "구르기",
+			"next": {
+				"LIGHT": "roll_attack"
+			},
+			"comboWindow": 12
+		},
+		"roll": {
+			"animation": "animation.huntcraft.longsword.roll_forward",
+			"length": 37,
+			"cancel": 27,
+			"evadeCancel": 32,
+			"root": [
+				[0, 0],
+				[3, 0.2],
+				[26, 3.0]
+			],
+			"shake": [
+				{
+					"frame": 22,
+					"strength": 0.06,
+					"duration": 0.18
+				}
+			],
+			"evade": true,
+			"stamina": 25,
+			"idleNext": true,
+			"grip": "right",
+			"turnFree": true,
+			"name": "구르기",
+			"neutral": "backstep",
+			"next": {
+				"LIGHT": "roll_attack"
+			},
+			"comboWindow": 12
+		},
+		"hit_flinch": {
+			"animation": "animation.huntcraft.longsword.hit_flinch",
+			"length": 27,
+			"turn": 0,
+			"grip": "right",
+			"evadeCancel": 27,
+			"cancel": 27
+		},
+		"hit_knockback": {
+			"animation": "animation.huntcraft.longsword.hit_knockback",
+			"length": 48,
+			"turn": 0,
+			"grip": "right",
+			"evadeCancel": 40,
+			"cancel": 48,
+			"root": [
+				[0, 0],
+				[4, -0.6],
+				[20, -2.0],
+				[30, -2.2]
+			]
+		},
+		"hit_launch": {
+			"animation": "animation.huntcraft.longsword.hit_launch",
+			"length": 120,
+			"turn": 0,
+			"grip": "right",
+			"invuln": [
+				[0, 119]
+			],
+			"wakeUp": true,
+			"evadeCancel": 100,
+			"cancel": 120,
+			"root": [
+				[0, 0],
+				[6, -1.2],
+				[22, -3.8],
+				[30, -4.2]
+			],
+			"shake": [
+				{
+					"frame": 24,
+					"strength": 0.1,
+					"duration": 0.25
+				}
+			]
+		},
+		"ear_cover": {
+			"animation": "animation.huntcraft.longsword.ear_cover",
+			"length": 72,
+			"turn": 0,
+			"grip": "right",
+			"evadeCancel": 60,
+			"cancel": 72
+		},
+		"use_item": {
+			"name": "아이템 사용",
+			"itemSelect": true,
+			"length": 1
+		},
+		"use_drink": {
+			"name": "마시기",
+			"animation": "animation.huntcraft.longsword.use_drink",
+			"length": 96,
+			"walk": 0.35,
+			"grip": "item",
+			"itemFrame": 54,
+			"turn": 45,
+			"commit": true
+		},
+		"held": {
+			"name": "잡힘",
+			"animation": "animation.huntcraft.longsword.held",
+			"length": 600,
+			"walk": 0.0,
+			"cancel": 9999,
+			"evadeCancel": 9999,
+			"turnFree": true
+		},
+		"backstep": {
+			"name": "백스텝",
+			"animation": "animation.huntcraft.longsword.backstep",
+			"length": 30,
+			"turn": 0,
+			"root": [
+				[0, 0],
+				[3, -0.15],
+				[13, -1.6],
+				[19, -1.85]
+			],
+			"cancel": 18,
+			"evadeCancel": 24,
+			"evade": true,
+			"backstep": true,
+			"stamina": 15,
+			"idleNext": true,
+			"grip": "right",
+			"shake": [
+				{
+					"frame": 17,
+					"strength": 0.03,
+					"duration": 0.12
+				}
+			],
+			"next": {
+				"LIGHT": "backstep_attack"
+			},
+			"comboWindow": 10
+		},
+		"light_1": {
+			"name": "약공격 1",
+			"animation": "animation.huntcraft.longsword.light_1",
+			"length": 42,
+			"turn": 60,
+			"hits": [
+				{
+					"frames": [10, 15],
+					"motionValue": 100,
+					"poise": 12,
+					"stance": 6,
+					"hitstop": 3
+				}
+			],
+			"cancel": 20,
+			"evadeCancel": 16,
+			"stamina": 12,
+			"root": [
+				[0, 0],
+				[6, 0.1],
+				[14, 0.6],
+				[20, 0.7]
+			],
+			"next": {
+				"LIGHT": "light_2",
+				"HEAVY": "heavy_1",
+				"GUARD": "guard"
+			},
+			"comboWindow": 18,
+			"idleNext": true,
+			"grip": "both"
+		},
+		"light_2": {
+			"name": "약공격 2",
+			"animation": "animation.huntcraft.longsword.light_2",
+			"length": 42,
+			"turn": 60,
+			"hits": [
+				{
+					"frames": [9, 14],
+					"motionValue": 100,
+					"poise": 12,
+					"stance": 6,
+					"hitstop": 3
+				}
+			],
+			"cancel": 20,
+			"evadeCancel": 15,
+			"stamina": 12,
+			"root": [
+				[0, 0],
+				[5, 0.1],
+				[13, 0.6],
+				[18, 0.7]
+			],
+			"next": {
+				"LIGHT": "light_3",
+				"HEAVY": "heavy_1",
+				"GUARD": "guard"
+			},
+			"comboWindow": 18,
+			"idleNext": true,
+			"grip": "both"
+		},
+		"light_3": {
+			"name": "약공격 3",
+			"animation": "animation.huntcraft.longsword.light_3",
+			"length": 44,
+			"turn": 60,
+			"hits": [
+				{
+					"frames": [11, 16],
+					"motionValue": 105,
+					"poise": 13,
+					"stance": 7,
+					"hitstop": 3
+				}
+			],
+			"cancel": 22,
+			"evadeCancel": 17,
+			"stamina": 13,
+			"root": [
+				[0, 0],
+				[8, 0.1],
+				[15, 0.7],
+				[20, 0.8]
+			],
+			"next": {
+				"LIGHT": "light_4",
+				"HEAVY": "heavy_1",
+				"GUARD": "guard"
+			},
+			"comboWindow": 18,
+			"idleNext": true,
+			"grip": "both"
+		},
+		"light_4": {
+			"name": "약공격 4 (찌르기)",
+			"animation": "animation.huntcraft.longsword.thrust",
+			"length": 54,
+			"turn": 60,
+			"hits": [
+				{
+					"frames": [12, 19],
+					"motionValue": 115,
+					"poise": 15,
+					"stance": 8,
+					"hitstop": 4
+				}
+			],
+			"cancel": 28,
+			"evadeCancel": 21,
+			"stamina": 14,
+			"root": [
+				[0, 0],
+				[8, 0.1],
+				[14, 0.9],
+				[20, 1.0]
+			],
+			"next": {
+				"LIGHT": "light_1",
+				"HEAVY": "heavy_1",
+				"GUARD": "guard"
+			},
+			"comboWindow": 18,
+			"idleNext": true,
+			"grip": "both"
+		},
+		"heavy_1": {
+			"name": "강공격 1",
+			"animation": "animation.huntcraft.longsword.heavy_1",
+			"length": 72,
+			"turn": 60,
+			"hits": [
+				{
+					"frames": [28, 33],
+					"motionValue": 170,
+					"poise": 35,
+					"stance": 25,
+					"hitstop": 6
+				}
+			],
+			"hyperArmor": [14, 33],
+			"charge": {
+				"at": 22,
+				"into": "heavy_charge"
+			},
+			"cancel": 46,
+			"evadeCancel": 40,
+			"stamina": 24,
+			"root": [
+				[0, 0],
+				[20, 0.1],
+				[30, 0.9],
+				[36, 1.0]
+			],
+			"next": {
+				"HEAVY": "heavy_2",
+				"LIGHT": "light_1",
+				"GUARD": "guard"
+			},
+			"comboWindow": 20,
+			"idleNext": true,
+			"grip": "both",
+			"shake": [
+				{
+					"frame": 32,
+					"strength": 0.05,
+					"duration": 0.15
+				}
+			]
+		},
+		"heavy_2": {
+			"name": "강공격 2",
+			"animation": "animation.huntcraft.longsword.heavy_2",
+			"length": 72,
+			"turn": 60,
+			"hits": [
+				{
+					"frames": [27, 32],
+					"motionValue": 175,
+					"poise": 35,
+					"stance": 25,
+					"hitstop": 6
+				}
+			],
+			"hyperArmor": [14, 32],
+			"charge": {
+				"at": 22,
+				"into": "heavy_charge"
+			},
+			"cancel": 46,
+			"evadeCancel": 40,
+			"stamina": 24,
+			"root": [
+				[0, 0],
+				[20, 0.1],
+				[29, 0.9],
+				[34, 1.0]
+			],
+			"next": {
+				"HEAVY": "heavy_1",
+				"LIGHT": "light_1",
+				"GUARD": "guard"
+			},
+			"comboWindow": 20,
+			"idleNext": true,
+			"grip": "both"
+		},
+		"heavy_charge": {
+			"name": "차지",
+			"animation": "animation.huntcraft.longsword.heavy_charge",
+			"length": 600,
+			"turn": 0,
+			"hyperArmor": [0, 600],
+			"chargeHold": {
+				"max": 60,
+				"release": "heavy_charged"
+			},
+			"cancel": 600,
+			"evadeCancel": 600,
+			"grip": "both"
+		},
+		"heavy_charged": {
+			"name": "차지 강공격",
+			"animation": "animation.huntcraft.longsword.heavy_charged",
+			"length": 60,
+			"turn": 0,
+			"charged": true,
+			"hits": [
+				{
+					"frames": [3, 9],
+					"motionValue": 170,
+					"poise": 35,
+					"stance": 30,
+					"hitstop": 8
+				}
+			],
+			"hyperArmor": [0, 9],
+			"cancel": 36,
+			"evadeCancel": 30,
+			"root": [
+				[0, 0],
+				[3, 0.2],
+				[9, 1.2],
+				[14, 1.3]
+			],
+			"next": {
+				"LIGHT": "light_1",
+				"HEAVY": "heavy_1",
+				"GUARD": "guard"
+			},
+			"comboWindow": 16,
+			"idleNext": true,
+			"grip": "both",
+			"shake": [
+				{
+					"frame": 8,
+					"strength": 0.08,
+					"duration": 0.2
+				}
+			]
+		},
+		"run_attack": {
+			"name": "달리기 공격 (돌진 찌르기)",
+			"animation": "animation.huntcraft.longsword.run_attack",
+			"length": 54,
+			"turn": 30,
+			"hits": [
+				{
+					"frames": [8, 16],
+					"motionValue": 120,
+					"poise": 20,
+					"stance": 12,
+					"hitstop": 4
+				}
+			],
+			"stamina": 16,
+			"root": [
+				[0, 0],
+				[4, 1.2],
+				[12, 3.0],
+				[18, 3.4]
+			],
+			"cancel": 34,
+			"evadeCancel": 28,
+			"next": {
+				"LIGHT": "light_2",
+				"GUARD": "guard"
+			},
+			"comboWindow": 16,
+			"idleNext": true,
+			"grip": "both"
+		},
+		"roll_attack": {
+			"name": "구르기 공격",
+			"animation": "animation.huntcraft.longsword.roll_attack",
+			"length": 44,
+			"turn": 60,
+			"hits": [
+				{
+					"frames": [7, 13],
+					"motionValue": 90,
+					"poise": 10,
+					"stance": 5,
+					"hitstop": 3
+				}
+			],
+			"stamina": 12,
+			"root": [
+				[0, 0],
+				[5, 0.5],
+				[12, 0.9]
+			],
+			"cancel": 24,
+			"evadeCancel": 18,
+			"next": {
+				"LIGHT": "light_2",
+				"GUARD": "guard"
+			},
+			"comboWindow": 16,
+			"idleNext": true,
+			"grip": "both"
+		},
+		"backstep_attack": {
+			"name": "백스텝 공격 (찌르기)",
+			"animation": "animation.huntcraft.longsword.thrust",
+			"length": 50,
+			"turn": 60,
+			"hits": [
+				{
+					"frames": [11, 19],
+					"motionValue": 110,
+					"poise": 14,
+					"stance": 8,
+					"hitstop": 4
+				}
+			],
+			"stamina": 12,
+			"root": [
+				[0, 0],
+				[8, 0.6],
+				[16, 1.6],
+				[20, 1.7]
+			],
+			"cancel": 30,
+			"evadeCancel": 24,
+			"next": {
+				"LIGHT": "light_2",
+				"GUARD": "guard"
+			},
+			"comboWindow": 16,
+			"idleNext": true,
+			"grip": "both"
+		},
+		"jump_light": {
+			"name": "점프 약공격",
+			"animation": "animation.huntcraft.longsword.jump_light",
+			"length": 44,
+			"turn": 30,
+			"hits": [
+				{
+					"frames": [7, 16],
+					"motionValue": 110,
+					"poise": 15,
+					"stance": 10,
+					"hitstop": 3
+				}
+			],
+			"stamina": 12,
+			"plunge": {
+				"frame": 4,
+				"speed": 12
+			},
+			"cancel": 34,
+			"evadeCancel": 30,
+			"grip": "both"
+		},
+		"jump_heavy": {
+			"name": "점프 강공격 (내려찍기)",
+			"animation": "animation.huntcraft.longsword.jump_heavy",
+			"length": 60,
+			"turn": 30,
+			"hits": [
+				{
+					"frames": [10, 22],
+					"motionValue": 160,
+					"poise": 40,
+					"stance": 40,
+					"hitstop": 7
+				}
+			],
+			"hyperArmor": [0, 22],
+			"stamina": 22,
+			"plunge": {
+				"frame": 8,
+				"speed": 22
+			},
+			"cancel": 42,
+			"evadeCancel": 38,
+			"grip": "both",
+			"shake": [
+				{
+					"frame": 16,
+					"strength": 0.07,
+					"duration": 0.2
+				}
+			]
+		},
+		"guard": {
+			"name": "가드",
+			"animation": "animation.huntcraft.longsword.guard",
+			"length": 36000,
+			"turn": 60,
+			"walk": 0.45,
+			"guardHold": true,
+			"guardFrom": 3,
+			"cancel": 0,
+			"evadeCancel": 0,
+			"next": {
+				"LIGHT": "light_1",
+				"HEAVY": "heavy_1",
+				"EVADE": "roll",
+				"PARRY": "parry"
+			},
+			"idleNext": true,
+			"grip": "both"
+		},
+		"guard_hit": {
+			"name": "막기",
+			"animation": "animation.huntcraft.longsword.guard_hit",
+			"length": 20,
+			"turn": 0,
+			"guardFrom": 0,
+			"guardNext": "guard",
+			"root": [
+				[0, 0],
+				[4, -0.4],
+				[10, -0.5]
+			],
+			"cancel": 14,
+			"evadeCancel": 12,
+			"next": {
+				"LIGHT": "light_1",
+				"EVADE": "roll"
+			},
+			"idleNext": true,
+			"grip": "both"
+		},
+		"parry": {
+			"name": "패링",
+			"animation": "animation.huntcraft.longsword.parry",
+			"length": 48,
+			"turn": 60,
+			"parry": [3, 13],
+			"stamina": 15,
+			"cancel": 44,
+			"evadeCancel": 38,
+			"grip": "both"
+		},
+		"parry_success": {
+			"name": "패링 성공",
+			"animation": "animation.huntcraft.longsword.parry_success",
+			"length": 24,
+			"turn": 0,
+			"invuln": [
+				[0, 10]
+			],
+			"cancel": 8,
+			"evadeCancel": 6,
+			"next": {
+				"LIGHT": "light_1",
+				"HEAVY": "heavy_1"
+			},
+			"idleNext": true,
+			"grip": "both",
+			"shake": [
+				{
+					"frame": 1,
+					"strength": 0.08,
+					"duration": 0.2
+				}
+			]
+		},
+		"critical": {
+			"name": "치명 일격",
+			"animation": "animation.huntcraft.longsword.critical",
+			"length": 110,
+			"turn": 180,
+			"turnFree": true,
+			"invuln": [
+				[0, 110]
+			],
+			"critical": {
+				"frame": 40,
+				"motionValue": 300
+			},
+			"root": [
+				[0, 0],
+				[10, 0.8],
+				[20, 1.0]
+			],
+			"cancel": 96,
+			"evadeCancel": 90,
+			"grip": "both",
+			"shake": [
+				{
+					"frame": 40,
+					"strength": 0.14,
+					"duration": 0.35
+				},
+				{
+					"frame": 75,
+					"strength": 0.07,
+					"duration": 0.2
+				}
+			],
+			"fov": [
+				[0, 0],
+				[30, -6],
+				[40, -9],
+				[70, -4],
+				[100, 0]
+			]
+		},
+		"guard_break": {
+			"name": "가드 붕괴",
+			"animation": "animation.huntcraft.longsword.guard_break",
+			"length": 70,
+			"turn": 0,
+			"root": [
+				[0, 0],
+				[6, -0.6],
+				[20, -1.0]
+			],
+			"cancel": 70,
+			"evadeCancel": 60,
+			"grip": "both",
+			"shake": [
+				{
+					"frame": 2,
+					"strength": 0.1,
+					"duration": 0.3
+				}
+			]
+		},
+		"death": {
+			"name": "쓰러짐",
+			"animation": "animation.huntcraft.longsword.death",
+			"length": 240,
+			"turn": 0,
+			"invuln": [
+				[0, 240]
+			],
+			"cancel": 9999,
+			"evadeCancel": 9999,
+			"grip": "right",
+			"shake": [
+				{
+					"frame": 60,
+					"strength": 0.08,
+					"duration": 0.3
+				}
+			]
+		},
+		"fog_pass": {
+			"name": "안개 헤치기",
+			"animation": "animation.huntcraft.longsword.fog_pass",
+			"length": 60,
+			"turn": 0,
+			"turnFree": true,
+			"invuln": [
+				[0, 60]
+			],
+			"cancel": 9999,
+			"evadeCancel": 9999,
+			"grip": "right"
+		},
+		"rest": {
+			"name": "휴식",
+			"animation": "animation.huntcraft.longsword.rest",
+			"length": 90,
+			"turn": 0,
+			"turnFree": true,
+			"cancel": 70,
+			"evadeCancel": 70,
+			"grip": "right"
+		}
+	},
+	"idleSheathedAnimation": "animation.huntcraft.longsword.idle_sheathed",
+	"idleDrawnGrip": "right"
+}

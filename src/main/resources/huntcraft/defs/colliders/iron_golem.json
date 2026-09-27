@@ -1,0 +1,47 @@
+{
+	"skeleton": "iron_golem",
+	"scale": 2.0,
+	"absorption": 0.25,
+	"parts": {
+		"head": {"multiplier": 1.4, "weak": true},
+		"body": {"multiplier": 1.0},
+		"arm_right": {"multiplier": 0.9},
+		"arm_left": {"multiplier": 0.9},
+		"leg_right": {"multiplier": 1.0},
+		"leg_left": {"multiplier": 1.0}
+	},
+	"hurtboxes": [
+		{"id": "body_0", "part": "body", "bone": "body", "shape": {"type": "obb", "center": [0.0, 27.0, -0.5], "size": [18.0, 12.0, 11.0]}},
+		{"id": "body_1", "part": "body", "bone": "body", "shape": {"type": "obb", "center": [0.0, 18.5, 0.0], "size": [10.0, 6.0, 7.0]}},
+		{"id": "head_0", "part": "head", "bone": "head", "shape": {"type": "obb", "center": [0.0, 38.0, -3.5], "size": [8.0, 10.0, 8.0]}},
+		{"id": "head_1", "part": "head", "bone": "head", "shape": {"type": "obb", "center": [0.0, 34.0, -8.5], "size": [2.0, 4.0, 2.0]}},
+		{"id": "right_arm_0", "part": "arm_right", "bone": "right_arm", "shape": {"type": "obb", "center": [-11.0, 26.0, 0.0], "size": [4.0, 15.0, 6.0]}},
+		{"id": "right_arm2_0", "part": "arm_right", "bone": "right_arm2", "shape": {"type": "obb", "center": [-11.0, 11.0, 0.0], "size": [4.0, 15.0, 6.0]}},
+		{"id": "left_arm_0", "part": "arm_left", "bone": "left_arm", "shape": {"type": "obb", "center": [11.0, 26.0, 0.0], "size": [4.0, 15.0, 6.0]}},
+		{"id": "left_arm2_0", "part": "arm_left", "bone": "left_arm2", "shape": {"type": "obb", "center": [11.0, 11.424, 0.052], "size": [4.0, 15.0, 6.0]}},
+		{"id": "right_leg_0", "part": "leg_right", "bone": "right_leg", "shape": {"type": "obb", "center": [-4.5, 8.0, -0.5], "size": [6.0, 16.0, 5.0]}},
+		{"id": "left_leg_0", "part": "leg_left", "bone": "left_leg", "shape": {"type": "obb", "center": [4.5, 8.0, -0.5], "size": [6.0, 16.0, 5.0]}}
+	],
+	"hitboxes": [
+		{"id": "fist_right", "bone": "right_arm2", "shape": {"type": "capsule", "a": [-11, 9, 0], "b": [-11, 4.5, 0], "radius": 2.8}},
+		{"id": "fist_left", "bone": "left_arm2", "shape": {"type": "capsule", "a": [11, 9.4, 0.05], "b": [11, 4.9, 0.05], "radius": 2.8}},
+		{"id": "upper_right", "bone": "right_arm", "shape": {"type": "capsule", "a": [-11, 31, 0], "b": [-11, 20, 0], "radius": 2.6}},
+		{"id": "upper_left", "bone": "left_arm", "shape": {"type": "capsule", "a": [11, 31, 0], "b": [11, 20, 0], "radius": 2.6}},
+		{"id": "fore_right", "bone": "right_arm2", "shape": {"type": "capsule", "a": [-11, 17, 0], "b": [-11, 4.5, 0], "radius": 2.8}},
+		{"id": "fore_left", "bone": "left_arm2", "shape": {"type": "capsule", "a": [11, 17.4, 0.05], "b": [11, 4.9, 0.05], "radius": 2.8}},
+		{"id": "foot_right", "bone": "right_leg", "shape": {"type": "capsule", "a": [-4.5, 7, -0.5], "b": [-4.5, 2, -0.5], "radius": 3.2}},
+		{"id": "body_charge", "bone": "body", "shape": {"type": "obb", "center": [0, 26, -2], "size": [22, 16, 15]}},
+		{"id": "body_slam", "bone": "body", "shape": {"type": "obb", "center": [0, 25, -6], "size": [26, 22, 22]}},
+		{"id": "inner_chest_r", "bone": "body", "shape": {"type": "capsule", "a": [-11, 28, -2], "b": [-2, 22, -9], "radius": 5}},
+		{"id": "inner_chest_l", "bone": "body", "shape": {"type": "capsule", "a": [11, 28, -2], "b": [2, 22, -9], "radius": 5}},
+		{"id": "inner_flank", "bone": "body", "shape": {"type": "obb", "center": [0, 22, -1], "size": [34, 18, 16]}},
+		{"id": "inner_waist", "bone": "body", "shape": {"type": "capsule", "a": [-15, 15, 0], "b": [15, 15, 0], "radius": 7}},
+		{"id": "inner_burst_r", "bone": "right_arm2", "shape": {"type": "capsule", "a": [-11, 2, 0], "b": [-11, 2, 0], "radius": 12}},
+		{"id": "inner_burst_l", "bone": "left_arm2", "shape": {"type": "capsule", "a": [11, 2.4, 0.05], "b": [11, 2.4, 0.05], "radius": 12}},
+		{"id": "inner_neck", "bone": "body", "shape": {"type": "capsule", "a": [0, 32, -5], "b": [0, 20, -9], "radius": 6}},
+		{"id": "shake_burst", "bone": "body", "shape": {"type": "capsule", "a": [0, 14, 0], "b": [0, 14, 0], "radius": 20}},
+		{"id": "crush_body", "bone": "body", "shape": {"type": "obb", "center": [0, 26, 0], "size": [30, 26, 24]}},
+		{"id": "steam_near", "bone": "head", "shape": {"type": "capsule", "a": [0, 34, -8], "b": [0, 31, -18], "radius": 8}},
+		{"id": "steam_far", "bone": "head", "shape": {"type": "capsule", "a": [0, 31, -18], "b": [0, 27, -34], "radius": 14}}
+	]
+}

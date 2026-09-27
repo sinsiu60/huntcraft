@@ -1,0 +1,8 @@
+{
+	"skeleton": "swing_rod",
+	"scale": 1.0,
+	"hurtboxes": [],
+	"hitboxes": [
+		{"id": "blade", "bone": "arm", "shape": {"type": "capsule", "a": [0, 16, 4], "b": [0, 16, 48], "radius": 1.5}}
+	]
+}

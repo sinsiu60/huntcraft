@@ -1,0 +1,413 @@
+{
+	"golem.tell": {
+		"subtitle": "subtitles.huntcraft.golem.tell",
+		"sounds": [
+			{
+				"name": "minecraft:block/chain/break1",
+				"pitch": 0.55,
+				"volume": 1.0,
+				"attenuation_distance": 40
+			},
+			{
+				"name": "minecraft:block/chain/break2",
+				"pitch": 0.55,
+				"volume": 1.0,
+				"attenuation_distance": 40
+			},
+			{
+				"name": "minecraft:block/chain/break3",
+				"pitch": 0.55,
+				"volume": 1.0,
+				"attenuation_distance": 40
+			}
+		]
+	},
+	"golem.tell_heavy": {
+		"subtitle": "subtitles.huntcraft.golem.tell_heavy",
+		"sounds": [
+			{
+				"name": "minecraft:mob/breeze/charge1",
+				"pitch": 0.5,
+				"volume": 1.0,
+				"attenuation_distance": 48
+			},
+			{
+				"name": "minecraft:mob/breeze/charge2",
+				"pitch": 0.5,
+				"volume": 1.0,
+				"attenuation_distance": 48
+			},
+			{
+				"name": "minecraft:mob/breeze/charge3",
+				"pitch": 0.5,
+				"volume": 1.0,
+				"attenuation_distance": 48
+			}
+		]
+	},
+	"golem.warn": {
+		"subtitle": "subtitles.huntcraft.golem.warn",
+		"sounds": [
+			{
+				"name": "minecraft:block/bell/bell_use01",
+				"pitch": 0.5,
+				"volume": 1.0,
+				"attenuation_distance": 56
+			},
+			{
+				"name": "minecraft:block/bell/bell_use02",
+				"pitch": 0.5,
+				"volume": 1.0,
+				"attenuation_distance": 56
+			},
+			{
+				"name": "minecraft:block/bell/bell_use01",
+				"pitch": 0.47,
+				"volume": 1.0,
+				"attenuation_distance": 56
+			}
+		]
+	},
+	"golem.warn_push": {
+		"subtitle": "subtitles.huntcraft.golem.warn_push",
+		"sounds": [
+			{
+				"name": "minecraft:mob/zombie/metal1",
+				"pitch": 1.25,
+				"volume": 1.0,
+				"attenuation_distance": 48
+			},
+			{
+				"name": "minecraft:mob/zombie/metal2",
+				"pitch": 1.25,
+				"volume": 1.0,
+				"attenuation_distance": 48
+			},
+			{
+				"name": "minecraft:mob/zombie/metal3",
+				"pitch": 1.25,
+				"volume": 1.0,
+				"attenuation_distance": 48
+			}
+		]
+	},
+	"golem.kick": {
+		"subtitle": "subtitles.huntcraft.golem.kick",
+		"sounds": [
+			{
+				"name": "minecraft:entity/wind_charge/wind_burst1",
+				"pitch": 0.5,
+				"volume": 1.0,
+				"attenuation_distance": 48
+			},
+			{
+				"name": "minecraft:entity/wind_charge/wind_burst2",
+				"pitch": 0.5,
+				"volume": 1.0,
+				"attenuation_distance": 48
+			},
+			{
+				"name": "minecraft:entity/wind_charge/wind_burst3",
+				"pitch": 0.5,
+				"volume": 1.0,
+				"attenuation_distance": 48
+			}
+		]
+	},
+	"golem.swing": {
+		"subtitle": "subtitles.huntcraft.golem.swing",
+		"sounds": [
+			{
+				"name": "minecraft:entity/player/attack/sweep1",
+				"pitch": 0.45,
+				"volume": 1.0,
+				"attenuation_distance": 32
+			},
+			{
+				"name": "minecraft:entity/player/attack/sweep2",
+				"pitch": 0.45,
+				"volume": 1.0,
+				"attenuation_distance": 32
+			},
+			{
+				"name": "minecraft:entity/player/attack/sweep3",
+				"pitch": 0.45,
+				"volume": 1.0,
+				"attenuation_distance": 32
+			}
+		]
+	},
+	"golem.swing_heavy": {
+		"subtitle": "subtitles.huntcraft.golem.swing_heavy",
+		"sounds": [
+			{
+				"name": "minecraft:item/mace/smash_air1",
+				"pitch": 0.55,
+				"volume": 1.0,
+				"attenuation_distance": 36
+			},
+			{
+				"name": "minecraft:item/mace/smash_air2",
+				"pitch": 0.55,
+				"volume": 1.0,
+				"attenuation_distance": 36
+			},
+			{
+				"name": "minecraft:item/mace/smash_air3",
+				"pitch": 0.55,
+				"volume": 1.0,
+				"attenuation_distance": 36
+			}
+		]
+	},
+	"golem.impact": {
+		"subtitle": "subtitles.huntcraft.golem.impact",
+		"sounds": [
+			{
+				"name": "minecraft:item/mace/smash_ground1",
+				"pitch": 0.6,
+				"volume": 1.0,
+				"attenuation_distance": 48
+			},
+			{
+				"name": "minecraft:item/mace/smash_ground2",
+				"pitch": 0.6,
+				"volume": 1.0,
+				"attenuation_distance": 48
+			},
+			{
+				"name": "minecraft:item/mace/smash_ground3",
+				"pitch": 0.6,
+				"volume": 1.0,
+				"attenuation_distance": 48
+			}
+		]
+	},
+	"golem.impact_heavy": {
+		"subtitle": "subtitles.huntcraft.golem.impact_heavy",
+		"sounds": [
+			{
+				"name": "minecraft:item/mace/smash_ground_heavy",
+				"pitch": 0.55,
+				"volume": 1.0,
+				"attenuation_distance": 64
+			},
+			{
+				"name": "minecraft:random/explode1",
+				"pitch": 0.6,
+				"volume": 1.0,
+				"attenuation_distance": 64
+			},
+			{
+				"name": "minecraft:random/explode2",
+				"pitch": 0.6,
+				"volume": 1.0,
+				"attenuation_distance": 64
+			}
+		]
+	},
+	"golem.debris": {
+		"subtitle": "subtitles.huntcraft.golem.debris",
+		"sounds": [
+			{
+				"name": "minecraft:block/deepslate/break1",
+				"pitch": 0.6,
+				"volume": 1.0,
+				"attenuation_distance": 40
+			},
+			{
+				"name": "minecraft:block/deepslate/break2",
+				"pitch": 0.6,
+				"volume": 1.0,
+				"attenuation_distance": 40
+			},
+			{
+				"name": "minecraft:block/deepslate/break3",
+				"pitch": 0.6,
+				"volume": 1.0,
+				"attenuation_distance": 40
+			}
+		]
+	},
+	"golem.step": {
+		"subtitle": "subtitles.huntcraft.golem.step",
+		"sounds": [
+			{
+				"name": "minecraft:mob/irongolem/walk1",
+				"pitch": 0.6,
+				"volume": 1.0,
+				"attenuation_distance": 32
+			},
+			{
+				"name": "minecraft:mob/irongolem/walk2",
+				"pitch": 0.6,
+				"volume": 1.0,
+				"attenuation_distance": 32
+			},
+			{
+				"name": "minecraft:mob/irongolem/walk3",
+				"pitch": 0.6,
+				"volume": 1.0,
+				"attenuation_distance": 32
+			}
+		]
+	},
+	"golem.grab": {
+		"subtitle": "subtitles.huntcraft.golem.grab",
+		"sounds": [
+			{
+				"name": "minecraft:mob/irongolem/throw",
+				"pitch": 0.55,
+				"volume": 1.0,
+				"attenuation_distance": 40
+			},
+			{
+				"name": "minecraft:mob/irongolem/throw",
+				"pitch": 0.65,
+				"volume": 1.0,
+				"attenuation_distance": 40
+			}
+		]
+	},
+	"hunter.hurt": {
+		"subtitle": "subtitles.huntcraft.hunter.hurt",
+		"sounds": [
+			{
+				"name": "minecraft:damage/hit1",
+				"pitch": 1.0,
+				"volume": 1.0,
+				"attenuation_distance": 20
+			},
+			{
+				"name": "minecraft:damage/hit2",
+				"pitch": 1.0,
+				"volume": 1.0,
+				"attenuation_distance": 20
+			},
+			{
+				"name": "minecraft:damage/hit3",
+				"pitch": 1.0,
+				"volume": 1.0,
+				"attenuation_distance": 20
+			}
+		]
+	},
+	"hunter.hurt_heavy": {
+		"subtitle": "subtitles.huntcraft.hunter.hurt_heavy",
+		"sounds": [
+			{
+				"name": "minecraft:damage/fallbig",
+				"pitch": 0.8,
+				"volume": 1.0,
+				"attenuation_distance": 28
+			},
+			{
+				"name": "minecraft:entity/player/attack/knockback1",
+				"pitch": 0.6,
+				"volume": 1.0,
+				"attenuation_distance": 28
+			},
+			{
+				"name": "minecraft:entity/player/attack/knockback2",
+				"pitch": 0.6,
+				"volume": 1.0,
+				"attenuation_distance": 28
+			}
+		]
+	},
+	"hunter.guard": {
+		"subtitle": "subtitles.huntcraft.hunter.guard",
+		"sounds": [
+			{
+				"name": "minecraft:item/shield/block1",
+				"pitch": 0.9,
+				"volume": 1.0,
+				"attenuation_distance": 24
+			},
+			{
+				"name": "minecraft:item/shield/block2",
+				"pitch": 0.9,
+				"volume": 1.0,
+				"attenuation_distance": 24
+			},
+			{
+				"name": "minecraft:item/shield/block3",
+				"pitch": 0.9,
+				"volume": 1.0,
+				"attenuation_distance": 24
+			}
+		]
+	},
+	"hunter.guard_break": {
+		"subtitle": "subtitles.huntcraft.hunter.guard_break",
+		"sounds": [
+			{
+				"name": "minecraft:random/break",
+				"pitch": 0.6,
+				"volume": 1.0,
+				"attenuation_distance": 32
+			},
+			{
+				"name": "minecraft:random/break",
+				"pitch": 0.72,
+				"volume": 1.0,
+				"attenuation_distance": 32
+			}
+		]
+	},
+	"hunter.parry": {
+		"subtitle": "subtitles.huntcraft.hunter.parry",
+		"sounds": [
+			{
+				"name": "minecraft:item/trident/ground_impact1",
+				"pitch": 1.4,
+				"volume": 1.0,
+				"attenuation_distance": 40
+			},
+			{
+				"name": "minecraft:item/trident/ground_impact2",
+				"pitch": 1.4,
+				"volume": 1.0,
+				"attenuation_distance": 40
+			},
+			{
+				"name": "minecraft:item/trident/ground_impact3",
+				"pitch": 1.4,
+				"volume": 1.0,
+				"attenuation_distance": 40
+			}
+		]
+	},
+	"music.prunis_intro": {
+		"sounds": [
+			{
+				"name": "huntcraft:music/prunis_intro",
+				"stream": true
+			}
+		]
+	},
+	"music.prunis_phase1": {
+		"sounds": [
+			{
+				"name": "huntcraft:music/prunis_phase1",
+				"stream": true
+			}
+		]
+	},
+	"music.prunis_phase2": {
+		"sounds": [
+			{
+				"name": "huntcraft:music/prunis_phase2",
+				"stream": true
+			}
+		]
+	},
+	"music.prunis_ending": {
+		"sounds": [
+			{
+				"name": "huntcraft:music/prunis_ending",
+				"stream": true
+			}
+		]
+	}
+}

@@ -12,7 +12,7 @@ import net.minecraft.server.ServerTickRateManager;
  * 클라이언트는 MinecraftTickRateMixin 으로 같은 속도로 돌아 입력 · 이동 · 위치 전송도 1/60초 단위가 됩니다.
  * 60 은 튜닝 값이 아니라 판정 구조의 전제라서 설정 파일에 두지 않습니다.
  *
- * 주의: 바닐라 시스템(낮밤 · 몹 이동 · 중력 등)도 3배 빨라집니다 → Phase 1 에서 이동 보정 예정.
+ * 바닐라 시스템(낮밤 · 이동 물리 · 날씨 · 스폰 등)은 VanillaPace 가 1초 20틱 속도로 되돌립니다.
  */
 public final class FixedTick {
 	public static final int HZ = 60;

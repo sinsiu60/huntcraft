@@ -1,0 +1,175 @@
+{
+	"skeleton": "hunter",
+	"scale": 1.0,
+	"hurtboxes": [
+		{
+			"id": "head",
+			"part": "head",
+			"bone": "head",
+			"shape": {
+				"type": "sphere",
+				"center": [
+					0,
+					28,
+					0
+				],
+				"radius": 4.5
+			}
+		},
+		{
+			"id": "body",
+			"part": "body",
+			"bone": "body",
+			"shape": {
+				"type": "obb",
+				"center": [
+					0,
+					18,
+					0
+				],
+				"size": [
+					8,
+					12,
+					4
+				],
+				"rotation": [
+					0,
+					0,
+					0
+				]
+			}
+		},
+		{
+			"id": "right_arm",
+			"part": "arm",
+			"bone": "right_arm",
+			"shape": {
+				"type": "capsule",
+				"a": [
+					-6,
+					22,
+					0
+				],
+				"b": [
+					-6,
+					13,
+					0
+				],
+				"radius": 2.2
+			}
+		},
+		{
+			"id": "left_arm",
+			"part": "arm",
+			"bone": "left_arm",
+			"shape": {
+				"type": "capsule",
+				"a": [
+					6,
+					22,
+					0
+				],
+				"b": [
+					6,
+					13,
+					0
+				],
+				"radius": 2.2
+			}
+		},
+		{
+			"id": "right_leg",
+			"part": "leg",
+			"bone": "right_leg",
+			"shape": {
+				"type": "capsule",
+				"a": [
+					-1.9,
+					11,
+					0
+				],
+				"b": [
+					-1.9,
+					2,
+					0
+				],
+				"radius": 2.2
+			}
+		},
+		{
+			"id": "left_leg",
+			"part": "leg",
+			"bone": "left_leg",
+			"shape": {
+				"type": "capsule",
+				"a": [
+					1.9,
+					11,
+					0
+				],
+				"b": [
+					1.9,
+					2,
+					0
+				],
+				"radius": 2.2
+			}
+		}
+	],
+	"hitboxes": [
+		{
+			"id": "blade_1",
+			"bone": "katana",
+			"shape": {
+				"type": "capsule",
+				"a": [
+					-2,
+					14,
+					-9
+				],
+				"b": [
+					-2,
+					14,
+					-20
+				],
+				"radius": 2.5
+			}
+		},
+		{
+			"id": "blade_2",
+			"bone": "katana",
+			"shape": {
+				"type": "capsule",
+				"a": [
+					-2,
+					14,
+					-20
+				],
+				"b": [
+					-2,
+					14,
+					-30
+				],
+				"radius": 2.5
+			}
+		},
+		{
+			"id": "blade_3",
+			"bone": "katana",
+			"shape": {
+				"type": "capsule",
+				"a": [
+					-2,
+					14,
+					-30
+				],
+				"b": [
+					-2,
+					14,
+					-41
+				],
+				"radius": 2.5
+			}
+		}
+	]
+}

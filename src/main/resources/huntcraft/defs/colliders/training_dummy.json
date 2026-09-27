@@ -1,0 +1,122 @@
+{
+	"skeleton": "training_dummy",
+	"scale": 1.0,
+	"hurtboxes": [
+		{
+			"id": "head",
+			"part": "head",
+			"bone": "head",
+			"shape": {
+				"type": "sphere",
+				"center": [
+					0,
+					28,
+					0
+				],
+				"radius": 4
+			}
+		},
+		{
+			"id": "body",
+			"part": "body",
+			"bone": "body",
+			"shape": {
+				"type": "obb",
+				"center": [
+					0,
+					18,
+					0
+				],
+				"size": [
+					8,
+					12,
+					4
+				],
+				"rotation": [
+					0,
+					0,
+					0
+				]
+			}
+		},
+		{
+			"id": "arm_left",
+			"part": "arm_left",
+			"bone": "arm_left",
+			"shape": {
+				"type": "capsule",
+				"a": [
+					6,
+					22,
+					0
+				],
+				"b": [
+					6,
+					12,
+					0
+				],
+				"radius": 1.5
+			}
+		},
+		{
+			"id": "arm_right",
+			"part": "arm_right",
+			"bone": "arm_right",
+			"shape": {
+				"type": "capsule",
+				"a": [
+					-6,
+					22,
+					0
+				],
+				"b": [
+					-6,
+					12,
+					0
+				],
+				"radius": 1.5
+			}
+		},
+		{
+			"id": "leg_left",
+			"part": "leg_left",
+			"bone": "leg_left",
+			"shape": {
+				"type": "capsule",
+				"a": [
+					2,
+					11,
+					0
+				],
+				"b": [
+					2,
+					1,
+					0
+				],
+				"radius": 2
+			}
+		},
+		{
+			"id": "leg_right",
+			"part": "leg_right",
+			"bone": "leg_right",
+			"shape": {
+				"type": "capsule",
+				"a": [
+					-2,
+					11,
+					0
+				],
+				"b": [
+					-2,
+					1,
+					0
+				],
+				"radius": 2
+			}
+		}
+	],
+	"hitboxes": [],
+	"absorption": 0.0,
+	"parts": {"head": {"multiplier": 1.3, "weak": true}, "body": {"multiplier": 1.0}, "arm_left": {"multiplier": 1.0}, "arm_right": {"multiplier": 1.0}, "leg_left": {"multiplier": 1.0}, "leg_right": {"multiplier": 1.0}}
+}

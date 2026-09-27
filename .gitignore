@@ -8,3 +8,6 @@ run/
 .vscode/
 *.DS_Store
 hs_err_*.log
+
+# 보스 음악 (저작권 — 공개 저장소에 올리지 않음. 로컬 빌드에는 들어감, 배포판은 -PnoMusic)
+src/main/resources/assets/huntcraft/sounds/music/

@@ -12,6 +12,7 @@
 		"client": ["kr.huntcraft.client.HuntCraftClient"]
 	},
 	"mixins": [
+		"huntcraft.mixins.json",
 		{ "config": "huntcraft.client.mixins.json", "environment": "client" }
 	],
 	"depends": {
@@ -19,7 +20,9 @@
 		"minecraft": "~26.2",
 		"java": ">=25",
 		"fabric-api": "*",
-		"geckolib": ">=${geckolib_version}",
+		"geckolib": ">=${geckolib_version}"
+	},
+	"recommends": {
 		"player_animation_library": "*"
 	}
 }

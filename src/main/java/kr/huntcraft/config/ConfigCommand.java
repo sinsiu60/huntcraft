@@ -16,7 +16,9 @@ public final class ConfigCommand {
 								.requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
 								.executes(c -> {
 									CommonConfig.load();
-									c.getSource().sendSuccess(() -> Component.literal("[HuntCraft] common.json 다시 읽음"), true);
+									kr.huntcraft.collision.Defs.load();
+									kr.huntcraft.hunter.HunterServer.broadcastConfig(c.getSource().getServer());
+									c.getSource().sendSuccess(() -> Component.literal("[HuntCraft] common.json · 판정 데이터 다시 읽음"), true);
 									return 1;
 								}))
 						.then(Commands.literal("info").executes(c -> {
